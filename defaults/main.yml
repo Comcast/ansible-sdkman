@@ -5,6 +5,12 @@
 # Set sdkman_dir to override
 #sdkman_dir: /usr/local/sdkman
 
+# Default user/group owner of the SDKMAN directory is determined by
+# `ansible_user_id' and `ansible_effective_group_id', respectively.
+# They can be overidden with the following variables.
+#sdkman_user: vagrant
+#sdkman_group: vagrant
+
 # Validate SSL when downloading init script? This is different from `sdkman_insecure_ssl' (see below).
 sdkman_validate_ssl: true
 

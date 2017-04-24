@@ -28,20 +28,19 @@ None.
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Here's an example!
 
 ```yaml
 - hosts: servers
   roles:
     - role: comcast.sdkman
+      sdkman_dir: /usr/local/sdkman
       sdkman_auto_answer: true
       sdkman_update: true
       sdkman_uninstall_packages:
         - { candidate: groovy, version: 1.8.9 }
       sdkman_install_packages:
         - { candidate: java, version: 8u131 }
-        - { candidate: java, version: 7u80 }
-        - { candidate: java, version: 6u45 }
         - { candidate: gradle, version: '3.5' }
         - { candidate: gradle, version: 2.14.1 }
         - { candidate: maven, version: 3.5.0 }
