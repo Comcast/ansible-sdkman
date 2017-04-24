@@ -44,3 +44,8 @@ sdkman_defaults: {}
 #sdkman_defaults:
 #  java: 8u131
 #  gradle: '3.5'
+
+# Flush caches before/after installing SDK packages
+# Reference: http://sdkman.io/usage.html (Flush section)
+sdkman_flush_caches_before: []
+sdkman_flush_caches_after: []

@@ -56,6 +56,17 @@
     owner: '{{ sdkman_user }}'
     group: '{{ sdkman_group }}'
 
+- name: Flush SDK caches (before)
+  shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk flush {{ item }}
+  args:
+    executable: /bin/bash
+  environment:
+    SDKMAN_DIR: '{{ sdkman_dir }}'
+  with_items: '{{ sdkman_flush_caches_before }}'
+  changed_when: false
+  become: yes
+  become_user: '{{ sdkman_user }}'
+
 - name: Update SDKMAN
   shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk selfupdate
   args:
@@ -119,5 +130,16 @@
   with_dict: '{{ sdkman_defaults }}'
   register: sdk_defaults
   changed_when: not item.value in get_sdk_defaults | json_query("results[?item=='"+item.key+"'].stdout|[0]")
+  become: yes
+  become_user: '{{ sdkman_user }}'
+
+- name: Flush SDK caches (after)
+  shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk flush {{ item }}
+  args:
+    executable: /bin/bash
+  environment:
+    SDKMAN_DIR: '{{ sdkman_dir }}'
+  with_items: '{{ sdkman_flush_caches_after }}'
+  changed_when: false
   become: yes
   become_user: '{{ sdkman_user }}'
