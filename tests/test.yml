@@ -2,6 +2,7 @@
 - hosts: all
   roles:
     - role: ansible-sdkman
+      sdkman_dir: /usr/local/sdkman
       sdkman_auto_answer: true
       sdkman_update: true
       sdkman_uninstall_packages:

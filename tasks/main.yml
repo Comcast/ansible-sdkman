@@ -60,6 +60,8 @@
   shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk selfupdate
   args:
     executable: /bin/bash
+  environment:
+    SDKMAN_DIR: '{{ sdkman_dir }}'
   register: sdk_selfupdate
   changed_when: sdk_selfupdate.stdout != 'No update available at this time.'
   become: yes
@@ -78,6 +80,8 @@
     fi
   args:
     executable: /bin/bash
+  environment:
+    SDKMAN_DIR: '{{ sdkman_dir }}'
   with_items: '{{ sdkman_install_packages }}'
   register: sdk_install
   changed_when: not item.candidate + ' ' + item.version + ' is already installed.' in sdk_install.stdout
@@ -88,6 +92,8 @@
   shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk uninstall {{ item.candidate }} {{ item.version }}
   args:
     executable: /bin/bash
+  environment:
+    SDKMAN_DIR: '{{ sdkman_dir }}'
   with_items: '{{ sdkman_uninstall_packages }}'
   register: sdk_uninstall
   changed_when: not item.candidate + ' ' + item.version + ' is not installed.' in sdk_uninstall.stdout
@@ -98,6 +104,8 @@
   shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk current {{ item }}
   args:
     executable: /bin/bash
+  environment:
+    SDKMAN_DIR: '{{ sdkman_dir }}'
   register: get_sdk_defaults
   changed_when: false
   with_items: '{{ sdkman_install_packages | map(attribute="candidate") | unique | list }}'
@@ -106,6 +114,8 @@
   shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk default {{ item.key }} {{ item.value }}
   args:
     executable: /bin/bash
+  environment:
+    SDKMAN_DIR: '{{ sdkman_dir }}'
   with_dict: '{{ sdkman_defaults }}'
   register: sdk_defaults
   changed_when: not item.value in get_sdk_defaults | json_query("results[?item=='"+item.key+"'].stdout|[0]")
