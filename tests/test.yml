@@ -8,8 +8,6 @@
         - { candidate: groovy, version: 1.8.9 }
       sdkman_install_packages:
         - { candidate: java, version: 8u131 }
-        - { candidate: java, version: 7u80 }
-        - { candidate: java, version: 6u45 }
         - { candidate: gradle, version: '3.5' }
         - { candidate: gradle, version: 2.14.1 }
         - { candidate: maven, version: 3.5.0 }
@@ -18,3 +16,11 @@
         java: 8u131
         gradle: '3.5'
         maven: 3.3.9
+      sdkman_validate_ssl: >-
+        {{ not (
+          ansible_distribution == "CentOS" and ansible_distribution_major_version|int < 7
+          or
+          ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int < 16
+          or
+          ansible_distribution == "Debian" and ansible_distribution_major_version|int < 8
+        )}}

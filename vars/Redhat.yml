@@ -1,0 +1,7 @@
+---
+# vars for Redhat systems
+system_packages:
+  - curl
+  - libselinux-python
+  - unzip
+  - zip

@@ -7,15 +7,21 @@
     sdkman_user: '{{ sdkman_user | default(ansible_user_id) }}'
     sdkman_group: '{{ sdkman_group | default(ansible_effective_group_id) }}'
 
+- name: Include system vars
+  include_vars:
+    file: '{{ item }}'
+    name: custom_system_vars
+  with_first_found:
+    - '{{ ansible_distribution }}.yml'
+    - '{{ ansible_os_family }}.yml'
+    - default.yml
+
 - name: Install system packages
   package:
     name: '{{ item }}'
     state: present
   become: yes
-  with_items:
-    - zip
-    - unzip
-  when: ansible_os_family != 'Darwin'
+  with_items: '{{ custom_system_vars.system_packages }}'
 
 - name: Download SDKMAN
   get_url:
@@ -23,6 +29,7 @@
     dest: /tmp/sdkman_script
     owner: '{{ sdkman_user }}'
     group: '{{ sdkman_group }}'
+    validate_certs: '{{ sdkman_validate_ssl }}'
 
 - name: Run SDKMAN script
   environment:

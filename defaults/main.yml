@@ -5,6 +5,24 @@
 # Set sdkman_dir to override
 #sdkman_dir: /usr/local/sdkman
 
+# Validate SSL when downloading init script? This is different from `sdkman_insecure_ssl' (see below).
+sdkman_validate_ssl: true
+
+# Update SDKMAN?
+sdkman_update: false
+
+# Configuration file options
+# Reference: http://sdkman.io/usage.html (Configuration section)
+sdkman_auto_answer: false
+sdkman_auto_selfupdate: false
+sdkman_insecure_ssl: false
+sdkman_disable_gvm_alias: false
+sdkman_curl_connect_timeout: 7
+sdkman_curl_max_time: 10
+sdkman_beta_channel: false
+sdkman_debug_mode: false
+sdkman_colour_enable: true
+
 # (un)install no packages by default, see format below
 sdkman_install_packages: []
 #sdkman_install_packages:
@@ -20,17 +38,3 @@ sdkman_defaults: {}
 #sdkman_defaults:
 #  java: 8u131
 #  gradle: '3.5'
-
-sdkman_update: false
-
-# Configuration file options
-# Reference: http://sdkman.io/usage.html (Configuration section)
-sdkman_auto_answer: false
-sdkman_auto_selfupdate: false
-sdkman_insecure_ssl: false
-sdkman_disable_gvm_alias: false
-sdkman_curl_connect_timeout: 7
-sdkman_curl_max_time: 10
-sdkman_beta_channel: false
-sdkman_debug_mode: false
-sdkman_colour_enable: true

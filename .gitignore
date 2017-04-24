@@ -8,3 +8,4 @@ VENV
 .molecule
 .vagrant
 __pycache__
+.cache

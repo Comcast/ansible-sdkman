@@ -33,11 +33,23 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-        - 7
-        - 6
-    - name: ubuntu
+        - '7'
+        - '6'
+    - name: Fedora
+      versions:
+        - '25'
+        - '24'
+    - name: Ubuntu
       versions:
         - xenial
+        - trusty
+    - name: Debian
+      versions:
+        - jessie
+        - wheezy
+    - name: MacOSX
+      versions:
+        - '10.12'
 
   galaxy_tags: [sdkman]
 
