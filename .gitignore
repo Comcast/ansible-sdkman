@@ -1,0 +1,10 @@
+*.pyc
+.venv
+venv
+ENV
+VENV
+*.retry
+*.log
+.molecule
+.vagrant
+__pycache__

@@ -1,0 +1,42 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+molecule:
+  ignore_paths:
+    - .venv
+    - .vagrant
+vagrant:
+  platforms:
+    - name: centos/7
+      box: centos/7
+      box_version: '1703.01'
+    - name: centos/6
+      box: centos/6
+      box_version: '1703.01'
+    - name: xenial64
+      box: gamernetwork/xenial64
+      box_version: 16.04.01
+    - name: macosx
+      box: elliotweiser/macosx-sierra-clt
+      box_version: 10.12.3
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        memory: 512
+        cpus: 2
+  instances:
+    - name: ansible-sdkman
+      ansible_groups:
+        - sdkman
+ansible:
+  become: false
+  playbook: tests/test.yml
+verifier:
+  name: testinfra
+  options:
+    verbose: true
+    connection: ansible
+    ansible_inventory: .molecule/ansible_inventory

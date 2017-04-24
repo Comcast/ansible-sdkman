@@ -1,0 +1,44 @@
+---
+galaxy_info:
+  author: Elliot Weiser
+  description: An Ansible role that installs/manages SDKMAN
+  company: Comcast NBC Universal
+
+  # If the issue tracker for your role is not on github, uncomment the
+  # next line and provide a value
+  # issue_tracker_url: http://example.com/issue/tracker
+
+  # Some suggested licenses:
+  # - BSD (default)
+  # - MIT
+  # - GPLv2
+  # - GPLv3
+  # - Apache
+  # - CC-BY
+  license: TBD
+
+  min_ansible_version: 1.2
+
+  # If this a Container Enabled role, provide the minimum Ansible Container version.
+  # min_ansible_container_version:
+
+  # Optionally specify the branch Galaxy will use when accessing the GitHub
+  # repo for this role. During role install, if no tags are available,
+  # Galaxy will use this branch. During import Galaxy will access files on
+  # this branch. If Travis integration is configured, only notifications for this
+  # branch will be accepted. Otherwise, in all cases, the repo's default branch
+  # (usually master) will be used.
+  #github_branch:
+
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 6
+    - name: ubuntu
+      versions:
+        - xenial
+
+  galaxy_tags: [sdkman]
+
+dependencies: []
