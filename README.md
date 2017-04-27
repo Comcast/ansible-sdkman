@@ -54,7 +54,7 @@ Here's an example!
 License
 -------
 
-TBD
+[Apache 2.0](License)
 
 Author Information
 ------------------
