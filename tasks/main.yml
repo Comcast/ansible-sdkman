@@ -5,7 +5,7 @@
   set_fact:
     sdkman_dir: '{{ sdkman_dir | default(ansible_env.HOME + "/.sdkman") }}'
     sdkman_user: '{{ sdkman_user | default(ansible_user_id) }}'
-    sdkman_group: '{{ sdkman_group | default(ansible_effective_group_id) }}'
+    sdkman_group: '{{ sdkman_group | default(ansible_user_gid) }}'
 
 - name: Include system vars
   include_vars:
@@ -128,8 +128,7 @@
   environment:
     SDKMAN_DIR: '{{ sdkman_dir }}'
   with_dict: '{{ sdkman_defaults }}'
-  register: sdk_defaults
-  changed_when: not item.value in get_sdk_defaults | json_query("results[?item=='"+item.key+"'].stdout|[0]")
+  changed_when: not item.value in (get_sdk_defaults.results | selectattr('item', 'equalto', item.key) | first).stdout
   become: yes
   become_user: '{{ sdkman_user }}'
 
