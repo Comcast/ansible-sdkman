@@ -1,0 +1,16 @@
+---
+sudo: required
+language: python
+services:
+  - docker
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
+install:
+  - virtualenv --python=$(which python2.7) .venv
+  - source .venv/bin/activate
+  - pip install --no-deps -r test-requirements.txt
+script:
+  - molecule test --driver docker
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
