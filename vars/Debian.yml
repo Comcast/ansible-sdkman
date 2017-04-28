@@ -2,5 +2,7 @@
 # vars for Debian systems
 system_packages:
   - curl
+  - debianutils
+  - findutils
   - unzip
   - zip
