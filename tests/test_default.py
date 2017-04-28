@@ -38,9 +38,9 @@ def test_other_mvn_installed(host):
     cmd = 'mvn --version\n'
     script = shell_header + 'sdk use maven 3.5.0\n' + cmd
     result = host.run(script + "'")
-    expected = '^Apache Maven 3\.5\.0.*$'
+    expected = 'Apache Maven 3.5.0'
     assert result.rc == 0
-    assert re.match(expected, result.stdout.split('\n')[2])
+    assert result.stdout.find(expected) != -1
 
 
 def test_gradle_installed(host):

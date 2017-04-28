@@ -1,7 +1,10 @@
-comcast.sdkman
+Comcast.sdkman
 ==============
 
-A brief description of the role goes here.
+[![Build Status][travis-badge]][travis-link]
+[![Apache 2.0 licensed][license-badge]][license-link]
+[![Galaxy Role][role-badge]][galaxy-link]
+
 An Ansible role that performs the following functions:
 * Install [SDKMAN](http://sdkman.io/)
 * Install/uninstall SDKMAN-managed software [candidates](http://sdkman.io/sdks.html)
@@ -60,3 +63,10 @@ Author Information
 ------------------
 
 * [Elliot Weiser](https://github.com/elliotweiser) @ [Comcast](https://github.com/Comcast)
+
+[galaxy-link]: https://galaxy.ansible.com/Comcast/sdkman/
+[license-badge]: https://img.shields.io/badge/license-Apache%202.0-blue.svg
+[license-link]: https://raw.githubusercontent.com/Comcast/ansible-sdkman/master/LICENSE
+[role-badge]: https://img.shields.io/ansible/role/17404.svg
+[travis-badge]: https://api.travis-ci.org/Comcast/ansible-sdkman.svg?branch=master
+[travis-link]: https://travis-ci.org/Comcast/ansible-sdkman

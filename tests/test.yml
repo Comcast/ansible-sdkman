@@ -1,7 +1,8 @@
 ---
-- hosts: all
+- name: Test SDKMAN role
+  hosts: all
   roles:
-    - role: ansible-sdkman
+    - role: .
       sdkman_dir: /usr/local/sdkman
       sdkman_auto_answer: true
       sdkman_update: true

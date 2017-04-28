@@ -2,11 +2,40 @@
 dependency:
   name: galaxy
 driver:
-  name: vagrant
+  name: docker
 molecule:
   ignore_paths:
     - .venv
+    - venv
     - .vagrant
+docker:
+  containers:
+    - name: centos7
+      image: centos
+      image_version: 7.3.1611
+    - name: centos6
+      image: centos
+      image_version: '6.9'
+    - name: xenial
+      image: ubuntu
+      image_version: xenial
+    - name: trusty
+      image: ubuntu
+      image_version: trusty
+    - name: fedora25
+      image: fedora
+      image_version: '25'
+      command: /bin/bash
+    #- name: fedora24
+    #  image: fedora
+    #  image_version: '24'
+    #  command: /bin/bash
+    - name: jessie
+      image: debian
+      image_version: jessie
+    - name: wheezy
+      image: debian
+      image_version: wheezy
 vagrant:
   raw_config_args:
     - 'vm.synced_folder ".", "/vagrant", disabled: true'

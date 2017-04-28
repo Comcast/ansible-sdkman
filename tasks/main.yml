@@ -83,7 +83,7 @@
   shell: |
     set -e
     source {{ sdkman_dir }}/bin/sdkman-init.sh
-    if 'java' == '{{ item.candidate }}'
+    if [ 'java' == '{{ item.candidate }}' ]
     then
       echo 'Y' | sdk install {{ item.candidate }} {{ item.version }}
     else
