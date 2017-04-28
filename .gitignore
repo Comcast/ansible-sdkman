@@ -9,3 +9,5 @@ VENV
 .vagrant
 __pycache__
 .cache
+id_rsa
+get-pip.py
