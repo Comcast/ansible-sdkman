@@ -21,5 +21,6 @@ script:
 branches:
   only:
     - master
+    - /^\d+\.\d+(\.\d+)?(-\S*)?$/
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
