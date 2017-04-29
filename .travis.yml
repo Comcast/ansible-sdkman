@@ -14,7 +14,7 @@ before_install:
 install:
   - virtualenv --python=$(which python2.7) .venv
   - source .venv/bin/activate
-  - pip install --no-deps -r test-requirements.txt
+  - pip install --no-deps -r tests/test-requirements.txt
 script:
   - ln -sf "${PWD}/tests/${MOLECULE_PLATFORM}/molecule.yml" "${PWD}/molecule.yml"
   - molecule test --driver docker
