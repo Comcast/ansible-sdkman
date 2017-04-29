@@ -1,0 +1,31 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+molecule:
+  ignore_paths:
+    - .venv
+    - venv
+    - .vagrant
+docker:
+  containers:
+    - name: alpine-edge
+      image: alpine
+      image_version: edge
+      command: /bin/bash
+    - name: alpine-3.5
+      image: alpine
+      image_version: '3.5'
+      command: /bin/bash
+ansible:
+  become: false
+  playbook: tests/test.yml
+  ansiblecfg_defaults:
+    callback_whitelist: profile_tasks,timer
+verifier:
+  name: testinfra
+  options:
+    verbose: true
+    connection: ansible
+    ansible_inventory: .molecule/ansible_inventory
