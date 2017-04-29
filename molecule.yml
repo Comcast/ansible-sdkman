@@ -26,10 +26,10 @@ docker:
       image: fedora
       image_version: '25'
       command: /bin/bash
-    #- name: fedora24
-    #  image: fedora
-    #  image_version: '24'
-    #  command: /bin/bash
+    - name: fedora24
+      image: fedora
+      image_version: '24'
+      command: /bin/bash
     - name: jessie
       image: debian
       image_version: jessie
