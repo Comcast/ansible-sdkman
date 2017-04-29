@@ -1,0 +1,49 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+molecule:
+  ignore_paths:
+    - .venv
+    - venv
+    - .vagrant
+docker:
+  containers:
+    - name: jessie
+      image: debian
+      image_version: jessie
+    - name: wheezy
+      image: debian
+      image_version: wheezy
+vagrant:
+  raw_config_args:
+    - 'vm.synced_folder ".", "/vagrant", disabled: true'
+  platforms:
+    - name: jessie
+      box: debian/jessie64
+      box_version: 8.7.0
+    - name: wheezy
+      box: debian/wheezy64
+      box_version: 7.11.2
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        memory: 2048
+        cpus: 2
+  instances:
+    - name: ansible-sdkman
+      ansible_groups:
+        - sdkman
+ansible:
+  become: false
+  playbook: tests/test.yml
+  ansiblecfg_defaults:
+    callback_whitelist: profile_tasks,timer
+verifier:
+  name: testinfra
+  options:
+    verbose: true
+    connection: ansible
+    ansible_inventory: .molecule/ansible_inventory

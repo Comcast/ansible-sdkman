@@ -1,6 +1,11 @@
 ---
 sudo: required
 language: python
+env:
+  - MOLECULE_PLATFORM=centos
+  - MOLECULE_PLATFORM=debian
+  - MOLECULE_PLATFORM=fedora
+  - MOLECULE_PLATFORM=ubuntu
 services:
   - docker
 before_install:
@@ -11,6 +16,7 @@ install:
   - source .venv/bin/activate
   - pip install --no-deps -r test-requirements.txt
 script:
+  - ln -sf "${PWD}/tests/${MOLECULE_PLATFORM}/molecule.yml" "${PWD}/molecule.yml"
   - molecule test --driver docker
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

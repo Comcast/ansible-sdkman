@@ -1,0 +1,49 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+molecule:
+  ignore_paths:
+    - .venv
+    - venv
+    - .vagrant
+docker:
+  containers:
+    - name: xenial
+      image: ubuntu
+      image_version: xenial
+    - name: trusty
+      image: ubuntu
+      image_version: trusty
+vagrant:
+  raw_config_args:
+    - 'vm.synced_folder ".", "/vagrant", disabled: true'
+  platforms:
+    - name: xenial
+      box: gamernetwork/xenial64
+      box_version: 16.04.01
+    - name: trusty
+      box: ubuntu/trusty64
+      box_version: 20170418.0.0
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        memory: 2048
+        cpus: 2
+  instances:
+    - name: ansible-sdkman
+      ansible_groups:
+        - sdkman
+ansible:
+  become: false
+  playbook: tests/test.yml
+  ansiblecfg_defaults:
+    callback_whitelist: profile_tasks,timer
+verifier:
+  name: testinfra
+  options:
+    verbose: true
+    connection: ansible
+    ansible_inventory: .molecule/ansible_inventory
