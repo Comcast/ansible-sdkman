@@ -18,5 +18,8 @@ install:
 script:
   - ln -sf "${PWD}/tests/${MOLECULE_PLATFORM}/molecule.yml" "${PWD}/molecule.yml"
   - molecule test --driver docker
+branches:
+  only:
+    - master
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
