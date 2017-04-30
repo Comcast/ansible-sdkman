@@ -1,0 +1,38 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+molecule:
+  ignore_paths:
+    - .venv
+    - venv
+    - .vagrant
+vagrant:
+  raw_config_args:
+    - 'vm.synced_folder ".", "/vagrant", disabled: true'
+  platforms:
+    - name: macosx
+      box: elliotweiser/macosx-sierra-clt
+      box_version: 10.12.3
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        memory: 2048
+        cpus: 2
+  instances:
+    - name: ansible-sdkman
+      ansible_groups:
+        - sdkman
+ansible:
+  become: false
+  playbook: tests/test.yml
+  ansiblecfg_defaults:
+    callback_whitelist: profile_tasks,timer
+verifier:
+  name: testinfra
+  options:
+    verbose: true
+    connection: ansible
+    ansible_inventory: .molecule/ansible_inventory

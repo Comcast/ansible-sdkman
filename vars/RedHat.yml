@@ -5,6 +5,7 @@ system_packages:
   - findutils
   - libselinux-python
   - libstdc++
+  - tar
   - unzip
   - which
   - zip

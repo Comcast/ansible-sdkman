@@ -80,7 +80,7 @@ Vagrant.configure("2") do |config|
     sudo pip install virtualenv
     virtualenv venv
     source venv/bin/activate
-    pip install --no-deps -r test-requirements.txt
+    pip install --no-deps -r tests/test-requirements.txt
     service docker start
   SHELL
 end

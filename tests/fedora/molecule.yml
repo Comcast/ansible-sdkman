@@ -10,32 +10,14 @@ molecule:
     - .vagrant
 docker:
   containers:
-    - name: centos7
-      image: centos
-      image_version: 7.3.1611
-    - name: centos6
-      image: centos
-      image_version: '6.9'
-    - name: xenial
-      image: ubuntu
-      image_version: xenial
-    - name: trusty
-      image: ubuntu
-      image_version: trusty
     - name: fedora25
       image: fedora
       image_version: '25'
       command: /bin/bash
-    #- name: fedora24
-    #  image: fedora
-    #  image_version: '24'
-    #  command: /bin/bash
-    - name: jessie
-      image: debian
-      image_version: jessie
-    - name: wheezy
-      image: debian
-      image_version: wheezy
+    - name: fedora24
+      image: fedora
+      image_version: '24'
+      command: /bin/bash
 vagrant:
   raw_config_args:
     - 'vm.synced_folder ".", "/vagrant", disabled: true'
@@ -43,33 +25,12 @@ vagrant:
   # and break up 'test' into its subcommands
   # i.e. sudo yum install -y python
   platforms:
-    - name: centos/7
-      box: centos/7
-      box_version: '1703.01'
-    - name: centos/6
-      box: centos/6
-      box_version: '1703.01'
     - name: fedora/25
       box: bertvv/fedora25
       box_version: 3.0.5
     - name: fedora/24
       box: bertvv/fedora24
       box_version: 3.0.5
-    - name: xenial
-      box: gamernetwork/xenial64
-      box_version: 16.04.01
-    - name: trusty
-      box: ubuntu/trusty64
-      box_version: 20170418.0.0
-    - name: jessie
-      box: debian/jessie64
-      box_version: 8.7.0
-    - name: wheezy
-      box: debian/wheezy64
-      box_version: 7.11.2
-    - name: macosx
-      box: elliotweiser/macosx-sierra-clt
-      box_version: 10.12.3
   providers:
     - name: virtualbox
       type: virtualbox

@@ -4,5 +4,6 @@ system_packages:
   - curl
   - debianutils
   - findutils
+  - tar
   - unzip
   - zip
