@@ -36,7 +36,7 @@ Here's an example!
 ```yaml
 - hosts: servers
   roles:
-    - role: comcast.sdkman
+    - role: Comcast.sdkman
       sdkman_dir: /usr/local/sdkman
       sdkman_auto_answer: true
       sdkman_update: true
@@ -52,6 +52,13 @@ Here's an example!
         java: 8u131
         gradle: '3.5'
         maven: 3.3.9
+      sdkman_flush_caches_before:
+        - temp
+      sdkman_flush_caches_after:
+        - archives
+        - broadcast
+        - candidates
+        - temp
 ```
 
 License
