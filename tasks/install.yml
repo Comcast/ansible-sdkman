@@ -1,0 +1,48 @@
+---
+# tasks for installing SDKMAN
+
+- name: Determine SDKMAN vars
+  set_fact:
+    sdkman_dir: '{{ sdkman_dir | default(ansible_env.HOME + "/.sdkman") }}'
+    sdkman_user: '{{ sdkman_user | default(ansible_user_id) }}'
+    sdkman_group: '{{ sdkman_group | default(ansible_user_gid) }}'
+
+- name: Include system vars
+  include_vars:
+    file: '{{ item }}'
+  with_first_found:
+    - '{{ ansible_distribution }}.yml'
+    - '{{ ansible_os_family }}.yml'
+    - default.yml
+
+- name: Install system packages
+  package:
+    name: '{{ item }}'
+    state: present
+  become: yes
+  with_items: '{{ system_packages }}'
+
+- name: Download SDKMAN
+  get_url:
+    url: https://get.sdkman.io
+    dest: /tmp/sdkman_script
+    owner: '{{ sdkman_user }}'
+    group: '{{ sdkman_group }}'
+    validate_certs: '{{ sdkman_validate_ssl }}'
+
+- name: Run SDKMAN script
+  environment:
+    SDKMAN_DIR: '{{ sdkman_dir }}'
+  command: bash /tmp/sdkman_script
+  args:
+    creates: '{{ sdkman_dir }}/bin/sdkman-init.sh'
+  become: yes
+
+- name: Fix permissions on SDKMAN_DIR
+  file:
+    path: '{{ sdkman_dir }}'
+    state: directory
+    owner: '{{ sdkman_user }}'
+    group: '{{ sdkman_group }}'
+    recurse: true
+  become: yes
