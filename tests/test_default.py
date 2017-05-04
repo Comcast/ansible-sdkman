@@ -25,7 +25,7 @@ def test_config_file(host):
     assert f.mode == 0o644
     assert f.user == setup['ansible_facts']['ansible_user_id']
     assert f.gid == setup['ansible_facts']['ansible_user_gid']
-    assert f.contains('sdkman_auto_answer=true\n')
+    assert f.contains('sdkman_auto_answer=true')
 
 
 def test_java_installed(host):

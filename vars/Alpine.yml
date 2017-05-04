@@ -1,0 +1,17 @@
+---
+# vars for Alpine systems
+system_packages:
+  - ca-certificates
+  - curl
+  - findutils
+  - libstdc\+\+
+  - openssl
+  - unzip
+  - zip
+
+alpine_glibc_version: 2.25-r0
+alpine_glibc_download_url: https://github.com/sgerrand/alpine-pkg-glibc/releases/download/{{ alpine_glibc_version }}
+alpine_glibc_pkg_names:
+  - glibc
+  - glibc-bin
+  - glibc-i18n

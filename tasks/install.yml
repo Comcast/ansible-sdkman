@@ -22,6 +22,9 @@
   become: yes
   with_items: '{{ system_packages }}'
 
+- include: install_glibc_alpine.yml
+  when: ansible_os_family == 'Alpine'
+
 - name: Download SDKMAN
   get_url:
     url: https://get.sdkman.io

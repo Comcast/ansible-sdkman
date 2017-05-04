@@ -1,0 +1,32 @@
+---
+# tasks to install GLIBC on Alpine Linux
+
+- name: Check for GLIBC packages in Alpine Linux
+  command: apk info --installed {{ item }}
+  changed_when: false
+  ignore_errors: true
+  with_items: '{{ alpine_glibc_pkg_names }}'
+  register: alpine_glibc_test
+
+- name: Download GLIBC files pkgs for Alpine Linux
+  get_url:
+    url: '{{ alpine_glibc_download_url }}/{{ item }}-{{ alpine_glibc_version }}.apk'
+    dest: /tmp/
+  with_items: '{{ alpine_glibc_test.results | selectattr("rc", "equalto", 1) | map(attribute="item") | list }}'
+
+- name: Add sgerrand's public key
+  get_url:
+    url: '{{ alpine_glibc_download_url }}/sgerrand.rsa.pub'
+    dest: /etc/apk/keys/
+
+- name: Install GLIBC for Alpine Linux
+  apk:
+    name: /tmp/{{ item }}-{{ alpine_glibc_version }}.apk
+    state: present
+  with_items: '{{ alpine_glibc_test.results | selectattr("rc", "equalto", 1) | map(attribute="item") | list }}'
+
+- name: Cleanup GLIBC apk files
+  file:
+    path: /tmp/{{ item }}-{{ alpine_glibc_version }}.apk
+    state: absent
+  with_items: '{{ alpine_glibc_test.results | selectattr("rc", "equalto", 1) | map(attribute="item") | list }}'
