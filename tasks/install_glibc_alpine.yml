@@ -8,11 +8,15 @@
   with_items: '{{ alpine_glibc_pkg_names }}'
   register: alpine_glibc_test
 
+- name: Set Alpine GLIBC packages to install
+  set_fact:
+    alpine_glibc_pkgs_to_install: '{{ alpine_glibc_test.results | selectattr("rc", "equalto", 1) | map(attribute="item") | list }}'
+
 - name: Download GLIBC files pkgs for Alpine Linux
   get_url:
     url: '{{ alpine_glibc_download_url }}/{{ item }}-{{ alpine_glibc_version }}.apk'
-    dest: /tmp/
-  with_items: '{{ alpine_glibc_test.results | selectattr("rc", "equalto", 1) | map(attribute="item") | list }}'
+    dest: '{{ sdkman_tmp_dir }}/'
+  with_items: '{{ alpine_glibc_pkgs_to_install }}'
 
 - name: Add sgerrand's public key
   get_url:
@@ -21,12 +25,12 @@
 
 - name: Install GLIBC for Alpine Linux
   apk:
-    name: /tmp/{{ item }}-{{ alpine_glibc_version }}.apk
+    name: '{{ sdkman_tmp_dir }}/{{ item }}-{{ alpine_glibc_version }}.apk'
     state: present
-  with_items: '{{ alpine_glibc_test.results | selectattr("rc", "equalto", 1) | map(attribute="item") | list }}'
+  with_items: '{{ alpine_glibc_pkgs_to_install }}'
 
 - name: Cleanup GLIBC apk files
   file:
-    path: /tmp/{{ item }}-{{ alpine_glibc_version }}.apk
+    path: '{{ sdkman_tmp_dir }}/{{ item }}-{{ alpine_glibc_version }}.apk'
     state: absent
-  with_items: '{{ alpine_glibc_test.results | selectattr("rc", "equalto", 1) | map(attribute="item") | list }}'
+  with_items: '{{ alpine_glibc_pkgs_to_install }}'

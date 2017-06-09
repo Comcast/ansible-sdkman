@@ -25,21 +25,34 @@
 - include: install_glibc_alpine.yml
   when: ansible_os_family == 'Alpine'
 
+- name: Check for SDKMAN installation
+  stat:
+    path: '{{ sdkman_dir }}/bin/sdkman-init.sh'
+  register: sdkman_init
+
 - name: Download SDKMAN
   get_url:
     url: https://get.sdkman.io
-    dest: /tmp/sdkman_script
+    dest: '{{ sdkman_tmp_dir }}/sdkman_script'
     owner: '{{ sdkman_user }}'
     group: '{{ sdkman_group }}'
     validate_certs: '{{ sdkman_validate_ssl }}'
+  when: not sdkman_init.stat.exists
 
 - name: Run SDKMAN script
   environment:
     SDKMAN_DIR: '{{ sdkman_dir }}'
-  command: bash /tmp/sdkman_script
+  command: bash {{ sdkman_tmp_dir }}/sdkman_script
   args:
     creates: '{{ sdkman_dir }}/bin/sdkman-init.sh'
+  when: not sdkman_init.stat.exists
   become: yes
+
+- name: Cleanup SDKMAN script
+  file:
+    path: '{{ sdkman_tmp_dir }}/sdkman_script'
+    state: absent
+  when: not sdkman_init.stat.exists
 
 - name: Fix permissions on SDKMAN_DIR
   file:
