@@ -24,15 +24,7 @@
   when: sdkman_update
 
 - name: Install SDK candidates/versions
-  shell: |
-    set -e
-    source {{ sdkman_dir }}/bin/sdkman-init.sh
-    if [ 'java' == '{{ item.candidate }}' ]
-    then
-      echo 'Y' | sdk install {{ item.candidate }} {{ item.version }}
-    else
-      sdk install {{ item.candidate }} {{ item.version }}
-    fi
+  shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk install {{ item.candidate }} {{ item.version }}
   args:
     executable: /bin/bash
   with_items: '{{ sdkman_install_packages }}'
