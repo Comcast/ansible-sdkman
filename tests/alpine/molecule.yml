@@ -10,14 +10,15 @@ molecule:
     - .vagrant
 docker:
   containers:
+    - name: alpine-jdk
+      image: openjdk
+      image_version: 8u131-jdk-alpine
+      command: /bin/bash
     - name: alpine-edge
       image: alpine
       image_version: edge
       command: /bin/bash
-    - name: alpine-3.5
-      image: alpine
-      image_version: '3.5'
-      command: /bin/bash
+
 ansible:
   become: false
   playbook: tests/test.yml

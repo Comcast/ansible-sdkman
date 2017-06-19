@@ -36,7 +36,6 @@ sdkman_colour_enable: true
 # (un)install no packages by default, see format below
 sdkman_install_packages: []
 #sdkman_install_packages:
-#  - { candidate: java, version: 8u131 }
 #  - { candidate: gradle, version: '3.5' }
 #  - { candidate: maven, version: 3.5.0 }
 sdkman_uninstall_packages: []
@@ -46,8 +45,8 @@ sdkman_uninstall_packages: []
 # Configure default candidate versions
 sdkman_defaults: {}
 #sdkman_defaults:
-#  java: 8u131
 #  gradle: '3.5'
+#  maven: '3.3.9'
 
 # Flush caches before/after installing SDK packages
 # Reference: http://sdkman.io/usage.html (Flush section)
