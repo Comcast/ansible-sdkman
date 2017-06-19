@@ -12,6 +12,10 @@ An Ansible role that performs the following functions:
 * Manage the SDKMAN configuration file: `/path/to/sdkman/etc/config`
 * Flush the SDKMAN caches
 
+> **Warning**: Oracle has made it increasingly difficult to install their JDKs,
+> which has impeded the ability to install them via SDKMAN. Consider using the
+> OpenJDK instead or installing/managing the Oracle JDK by other means.
+
 Requirements
 ------------
 
@@ -43,13 +47,11 @@ Here's an example!
       sdkman_uninstall_packages:
         - { candidate: groovy, version: 1.8.9 }
       sdkman_install_packages:
-        - { candidate: java, version: 8u131 }
         - { candidate: gradle, version: '3.5' }
         - { candidate: gradle, version: 2.14.1 }
         - { candidate: maven, version: 3.5.0 }
         - { candidate: maven, version: 3.3.9 }
       sdkman_defaults:
-        java: 8u131
         gradle: '3.5'
         maven: 3.3.9
       sdkman_flush_caches_before:

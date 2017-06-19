@@ -28,12 +28,6 @@ def test_config_file(host):
     assert f.contains('sdkman_auto_answer=true')
 
 
-def test_java_installed(host):
-    cmds = ['java -version']
-    expected = 'java version "1.8.0_131"'
-    check_run_for_rc_and_result(cmds, expected, host, check_stderr=True)
-
-
 def test_mvn_installed(host):
     cmds = ['mvn --version']
     expected = 'Apache Maven 3.3.9'
