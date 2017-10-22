@@ -18,6 +18,7 @@
 - name: Install system packages
   package:
     name: '{{ item }}'
+    use: '{{ ansible_pkg_mgr }}'
     state: present
   become: yes
   with_items: '{{ system_packages }}'

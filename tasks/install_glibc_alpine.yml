@@ -10,11 +10,16 @@
 
 - name: Set Alpine GLIBC packages to install
   set_fact:
-    alpine_glibc_pkgs_to_install: '{{ alpine_glibc_test.results | selectattr("rc", "equalto", 1) | map(attribute="item") | list }}'
+    alpine_glibc_pkgs_to_install: >-
+      {{ alpine_glibc_test.results |
+         selectattr("rc", "equalto", 1) |
+         map(attribute="item") |
+         list }}
 
 - name: Download GLIBC files pkgs for Alpine Linux
   get_url:
-    url: '{{ alpine_glibc_download_url }}/{{ item }}-{{ alpine_glibc_version }}.apk'
+    url: >-
+      {{ alpine_glibc_download_url }}/{{ item }}-{{ alpine_glibc_version }}.apk
     dest: '{{ sdkman_tmp_dir }}/'
   with_items: '{{ alpine_glibc_pkgs_to_install }}'
 
