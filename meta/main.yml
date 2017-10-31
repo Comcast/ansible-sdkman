@@ -4,24 +4,9 @@ galaxy_info:
   description: An Ansible role that installs/manages SDKMAN
   company: Comcast NBC Universal
 
-  # If the issue tracker for your role is not on github, uncomment the
-  # next line and provide a value
-  # issue_tracker_url: http://example.com/issue/tracker
-
   license: Apache
 
   min_ansible_version: 2.2
-
-  # If this a Container Enabled role, provide the minimum Ansible Container version.
-  # min_ansible_container_version:
-
-  # Optionally specify the branch Galaxy will use when accessing the GitHub
-  # repo for this role. During role install, if no tags are available,
-  # Galaxy will use this branch. During import Galaxy will access files on
-  # this branch. If Travis integration is configured, only notifications for this
-  # branch will be accepted. Otherwise, in all cases, the repo's default branch
-  # (usually master) will be used.
-  #github_branch:
 
   platforms:
     - name: Alpine
@@ -33,14 +18,18 @@ galaxy_info:
         - '6'
     - name: Fedora
       versions:
+        - '26'
         - '25'
         - '24'
     - name: Ubuntu
       versions:
+        - artful
+        - zesty
         - xenial
         - trusty
     - name: Debian
       versions:
+        - stretch
         - jessie
         - wheezy
     - name: MacOSX

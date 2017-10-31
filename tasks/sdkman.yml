@@ -9,7 +9,8 @@
     group: '{{ sdkman_group }}'
 
 - name: Flush SDK caches (before)
-  shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk flush {{ item }}
+  shell: >-
+    source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk flush {{ item }}
   args:
     executable: /bin/bash
   with_items: '{{ sdkman_flush_caches_before }}'
@@ -24,20 +25,28 @@
   when: sdkman_update
 
 - name: Install SDK candidates/versions
-  shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk install {{ item.candidate }} {{ item.version }}
+  shell: >-
+    source {{ sdkman_dir }}/bin/sdkman-init.sh &&
+    sdk install {{ item.candidate }} {{ item.version }}
   args:
     executable: /bin/bash
   with_items: '{{ sdkman_install_packages }}'
   register: sdk_install
-  changed_when: not item.candidate + ' ' + item.version + ' is already installed.' in sdk_install.stdout
+  changed_when: >-
+    not item.candidate + ' ' + item.version + ' is already installed.'
+    in sdk_install.stdout
 
 - name: Uninstall SDK candidates/versions
-  shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk uninstall {{ item.candidate }} {{ item.version }}
+  shell: >-
+    source {{ sdkman_dir }}/bin/sdkman-init.sh &&
+    sdk uninstall {{ item.candidate }} {{ item.version }}
   args:
     executable: /bin/bash
   with_items: '{{ sdkman_uninstall_packages }}'
   register: sdk_uninstall
-  changed_when: not item.candidate + ' ' + item.version + ' is not installed.' in sdk_uninstall.stdout
+  changed_when: >-
+    not item.candidate + ' ' + item.version + ' is not installed.'
+    in sdk_uninstall.stdout
 
 - name: Get SDK defaults
   shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk current {{ item }}
@@ -45,14 +54,21 @@
     executable: /bin/bash
   register: get_sdk_defaults
   changed_when: false
-  with_items: '{{ sdkman_install_packages | map(attribute="candidate") | unique | list }}'
+  with_items: >-
+    {{ sdkman_install_packages | map(attribute="candidate") | unique | list }}
 
 - name: Set SDK defaults
-  shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk default {{ item.key }} {{ item.value }}
+  shell: >-
+    source {{ sdkman_dir }}/bin/sdkman-init.sh &&
+    sdk default {{ item.key }} {{ item.value }}
   args:
     executable: /bin/bash
   with_dict: '{{ sdkman_defaults }}'
-  changed_when: not item.value in (get_sdk_defaults.results | selectattr('item', 'equalto', item.key) | first).stdout
+  changed_when: >-
+    not item.value in
+    (get_sdk_defaults.results |
+     selectattr('item', 'equalto', item.key) |
+     first).stdout
 
 - name: Flush SDK caches (after)
   shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk flush {{ item }}

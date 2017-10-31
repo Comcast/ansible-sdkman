@@ -3,7 +3,7 @@
 
 # Installation directory defaults to ~/.sdkman
 # Set sdkman_dir to override
-#sdkman_dir: /usr/local/sdkman
+# sdkman_dir: /usr/local/sdkman
 
 # The directory in which to download the SDKMAN initialization script.
 sdkman_tmp_dir: /tmp
@@ -11,8 +11,8 @@ sdkman_tmp_dir: /tmp
 # Default user/group owner of the SDKMAN directory is determined by
 # `ansible_user_id' and `ansible_user_gid', respectively.
 # They can be overidden with the following variables.
-#sdkman_user: vagrant
-#sdkman_group: vagrant
+# sdkman_user: vagrant
+# sdkman_group: vagrant
 
 # Validate SSL when downloading init script?
 # This is different from `sdkman_insecure_ssl' (see below).
@@ -35,18 +35,18 @@ sdkman_colour_enable: true
 
 # (un)install no packages by default, see format below
 sdkman_install_packages: []
-#sdkman_install_packages:
-#  - { candidate: gradle, version: '3.5' }
-#  - { candidate: maven, version: 3.5.0 }
+# sdkman_install_packages:
+#   - { candidate: gradle, version: '3.5' }
+#   - { candidate: maven, version: 3.5.0 }
 sdkman_uninstall_packages: []
-#sdkman_uninstall_packages:
-#  - { candidate: java, version: 6u45 }
+# sdkman_uninstall_packages:
+#   - { candidate: java, version: 6u45 }
 
 # Configure default candidate versions
 sdkman_defaults: {}
-#sdkman_defaults:
-#  gradle: '3.5'
-#  maven: '3.3.9'
+# sdkman_defaults:
+#   gradle: '3.5'
+#   maven: '3.3.9'
 
 # Flush caches before/after installing SDK packages
 # Reference: http://sdkman.io/usage.html (Flush section)

@@ -2,23 +2,21 @@
 sudo: required
 language: python
 env:
-  - MOLECULE_PLATFORM=alpine
-  - MOLECULE_PLATFORM=centos
-  - MOLECULE_PLATFORM=debian
-  - MOLECULE_PLATFORM=fedora
-  - MOLECULE_PLATFORM=ubuntu
+  - MOLECULE_SCENARIO=alpine
+  - MOLECULE_SCENARIO=centos
+  - MOLECULE_SCENARIO=debian
+  - MOLECULE_SCENARIO=fedora
+  - MOLECULE_SCENARIO=ubuntu
 services:
   - docker
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
 install:
   - virtualenv --python=$(which python2.7) .venv
   - source .venv/bin/activate
   - pip install --no-deps -r tests/test-requirements.txt
 script:
-  - ln -sf "${PWD}/tests/${MOLECULE_PLATFORM}/molecule.yml" "${PWD}/molecule.yml"
-  - molecule test --driver docker
+  - molecule test --scenario-name ${MOLECULE_SCENARIO}
 branches:
   only:
     - master

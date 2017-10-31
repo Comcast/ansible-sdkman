@@ -2,37 +2,34 @@
 - name: Test SDKMAN role
   hosts: all
   pre_tasks:
-    - name: Install OpenJDK8 (RedHat)
-      yum:
-        name: java-1.8.0-openjdk-devel
+    - name: Install OpenJDK8
+      package:
+        name: "{%- if ansible_os_family == 'RedHat': -%}\
+               {{'java-1.8.0-openjdk-devel'}}\
+               {% elif ansible_os_family == 'Debian': %}\
+               {{'default-jdk'}}\
+               {% elif ansible_os_family == 'Alpine': %}\
+               {{'openjdk8'}}\
+               {%- endif -%}"
         state: present
-      when: ansible_os_family == 'RedHat'
-
-    - name: Install OpenJDK (Debian)
-      apt:
-        #name: openjdk-8-jdk
-        name: default-jdk
-        state: present
-      when: ansible_os_family == 'Debian'
-
-    - name: Install OpenJDK8 (Alpine)
-      apk:
-        name: openjdk8
-        state: present
-      when: ansible_os_family == 'Alpine'
 
   roles:
-    - role: .
+    - role: ansible-sdkman
       sdkman_dir: /usr/local/sdkman
       sdkman_auto_answer: true
       sdkman_update: true
       sdkman_uninstall_packages:
-        - { candidate: groovy, version: 1.8.9 }
+        - candidate: groovy
+          version: 1.8.9
       sdkman_install_packages:
-        - { candidate: gradle, version: '3.5' }
-        - { candidate: gradle, version: 2.14.1 }
-        - { candidate: maven, version: 3.5.0 }
-        - { candidate: maven, version: 3.3.9 }
+        - candidate: gradle
+          version: '3.5'
+        - candidate: gradle
+          version: 2.14.1
+        - candidate: maven
+          version: 3.5.0
+        - candidate: maven
+          version: 3.3.9
       sdkman_defaults:
         gradle: '3.5'
         maven: 3.3.9
@@ -45,9 +42,12 @@
         - temp
       sdkman_validate_ssl: >-
         {{ not (
-          ansible_distribution == "CentOS" and ansible_distribution_major_version|int < 7
+          ansible_distribution == "CentOS" and
+          ansible_distribution_major_version|int < 7
           or
-          ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int < 16
+          ansible_distribution == "Ubuntu" and
+          ansible_distribution_major_version|int < 16
           or
-          ansible_distribution == "Debian" and ansible_distribution_major_version|int < 8
+          ansible_distribution == "Debian" and
+          ansible_distribution_major_version|int < 8
         )}}

@@ -1,0 +1,37 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: artful
+    image: ubuntu:artful
+  - name: zesty
+    image: ubuntu:zesty
+  - name: xenial
+    image: ubuntu:xenial
+  - name: trusty
+    image: ubuntu:trusty
+provisioner:
+  name: ansible
+  playbooks:
+    create: ../default/create.yml
+    prepare: ../default/prepare.yml
+    converge: ../../tests/test.yml
+    destroy: ../default/destroy.yml
+  config_options:
+    defaults:
+      callback_whitelist: profile_tasks,timer
+  lint:
+    name: ansible-lint
+scenario:
+  name: ubuntu
+verifier:
+  name: testinfra
+  directory: ../../tests/
+  options:
+    verbose: true
+  lint:
+    name: flake8
