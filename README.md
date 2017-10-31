@@ -76,6 +76,6 @@ Author Information
 [galaxy-link]: https://galaxy.ansible.com/Comcast/sdkman/
 [license-badge]: https://img.shields.io/badge/license-Apache%202.0-blue.svg
 [license-link]: https://raw.githubusercontent.com/Comcast/ansible-sdkman/master/LICENSE
-[role-badge]: https://img.shields.io/ansible/role/17404.svg
+[role-badge]: https://img.shields.io/ansible/role/20938.svg
 [travis-badge]: https://api.travis-ci.org/Comcast/ansible-sdkman.svg?branch=master
 [travis-link]: https://travis-ci.org/Comcast/ansible-sdkman
