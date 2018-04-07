@@ -1,18 +1,8 @@
 ---
 - name: Test SDKMAN role
   hosts: all
-  pre_tasks:
-    - name: Install OpenJDK8
-      package:
-        name: "{%- if ansible_os_family == 'RedHat': -%}\
-               {{'java-1.8.0-openjdk-devel'}}\
-               {% elif ansible_os_family == 'Debian': %}\
-               {{'default-jdk'}}\
-               {% elif ansible_os_family == 'Alpine': %}\
-               {{'openjdk8'}}\
-               {%- endif -%}"
-        state: present
-
+  environment:
+    SDKMAN_DIR: /usr/local/sdkman
   roles:
     - role: ansible-sdkman
       sdkman_dir: /usr/local/sdkman
@@ -22,32 +12,18 @@
         - candidate: groovy
           version: 1.8.9
       sdkman_install_packages:
+        - candidate: java
+          version: 8.0.172-zulu
         - candidate: gradle
-          version: '3.5'
+          version: '4.6'
         - candidate: gradle
-          version: 2.14.1
-        - candidate: maven
-          version: 3.5.0
-        - candidate: maven
-          version: 3.3.9
+          version: '3.5.1'
       sdkman_defaults:
-        gradle: '3.5'
-        maven: 3.3.9
+        gradle: '4.6'
       sdkman_flush_caches_before:
         - temp
       sdkman_flush_caches_after:
-        - candidates
         - broadcast
         - archives
         - temp
-      sdkman_validate_ssl: >-
-        {{ not (
-          ansible_distribution == "CentOS" and
-          ansible_distribution_major_version|int < 7
-          or
-          ansible_distribution == "Ubuntu" and
-          ansible_distribution_major_version|int < 16
-          or
-          ansible_distribution == "Debian" and
-          ansible_distribution_major_version|int < 8
-        )}}
+      sdkman_validate_ssl: true

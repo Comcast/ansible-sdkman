@@ -6,7 +6,7 @@ galaxy_info:
 
   license: Apache
 
-  min_ansible_version: 2.2
+  min_ansible_version: 2.4
 
   platforms:
     - name: Alpine
@@ -18,20 +18,16 @@ galaxy_info:
         - '6'
     - name: Fedora
       versions:
-        - '26'
-        - '25'
-        - '24'
+        - '28'
+        - '27'
     - name: Ubuntu
       versions:
-        - artful
-        - zesty
-        - xenial
+        - bionic
         - trusty
+        - xenial
     - name: Debian
       versions:
         - stretch
-        - jessie
-        - wheezy
     - name: MacOSX
       versions:
         - '10.12'

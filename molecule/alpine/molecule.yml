@@ -6,10 +6,10 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: alpine-jdk
-    image: openjdk:8u131-jdk-alpine
-  - name: alpine-edge
-    image: alpine:edge
+  - name: alpine-38
+    image: alpine:3.8
+  - name: alpine-37
+    image: alpine:3.7
 provisioner:
   name: ansible
   playbooks:

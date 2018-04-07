@@ -10,14 +10,14 @@
 
 - name: Flush SDK caches (before)
   shell: >-
-    source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk flush {{ item }}
+    . {{ sdkman_dir }}/bin/sdkman-init.sh && sdk flush {{ item }}
   args:
     executable: /bin/bash
   with_items: '{{ sdkman_flush_caches_before }}'
   changed_when: false
 
 - name: Update SDKMAN
-  shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk selfupdate
+  shell: . {{ sdkman_dir }}/bin/sdkman-init.sh && sdk selfupdate
   args:
     executable: /bin/bash
   register: sdk_selfupdate
@@ -26,7 +26,7 @@
 
 - name: Install SDK candidates/versions
   shell: >-
-    source {{ sdkman_dir }}/bin/sdkman-init.sh &&
+    . {{ sdkman_dir }}/bin/sdkman-init.sh &&
     sdk install {{ item.candidate }} {{ item.version }}
   args:
     executable: /bin/bash
@@ -38,7 +38,7 @@
 
 - name: Uninstall SDK candidates/versions
   shell: >-
-    source {{ sdkman_dir }}/bin/sdkman-init.sh &&
+    . {{ sdkman_dir }}/bin/sdkman-init.sh &&
     sdk uninstall {{ item.candidate }} {{ item.version }}
   args:
     executable: /bin/bash
@@ -49,7 +49,7 @@
     in sdk_uninstall.stdout
 
 - name: Get SDK defaults
-  shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk current {{ item }}
+  shell: . {{ sdkman_dir }}/bin/sdkman-init.sh && sdk current {{ item }}
   args:
     executable: /bin/bash
   register: get_sdk_defaults
@@ -59,7 +59,7 @@
 
 - name: Set SDK defaults
   shell: >-
-    source {{ sdkman_dir }}/bin/sdkman-init.sh &&
+    . {{ sdkman_dir }}/bin/sdkman-init.sh &&
     sdk default {{ item.key }} {{ item.value }}
   args:
     executable: /bin/bash
@@ -71,7 +71,7 @@
      first).stdout
 
 - name: Flush SDK caches (after)
-  shell: source {{ sdkman_dir }}/bin/sdkman-init.sh && sdk flush {{ item }}
+  shell: . {{ sdkman_dir }}/bin/sdkman-init.sh && sdk flush {{ item }}
   args:
     executable: /bin/bash
   with_items: '{{ sdkman_flush_caches_after }}'

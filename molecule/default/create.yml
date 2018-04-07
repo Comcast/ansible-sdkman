@@ -49,7 +49,7 @@
         image: "molecule_local/{{ item.image }}"
         state: started
         recreate: False
-        log_driver: syslog
+        log_driver: none
         command: "{{ item.command | default('sleep 1h') }}"
         privileged: "{{ item.privileged | default(omit) }}"
         volumes: "{{ item.volumes | default(omit) }}"
