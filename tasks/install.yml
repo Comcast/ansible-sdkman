@@ -20,7 +20,7 @@
     name: '{{ item }}'
     use: '{{ ansible_pkg_mgr }}'
     state: present
-  become: yes
+  become: true
   with_items: '{{ system_packages }}'
 
 - include: install_glibc_alpine.yml
@@ -47,7 +47,7 @@
   args:
     creates: '{{ sdkman_dir }}/bin/sdkman-init.sh'
   when: not sdkman_init.stat.exists
-  become: yes
+  become: true
 
 - name: Cleanup SDKMAN script
   file:
@@ -62,4 +62,4 @@
     owner: '{{ sdkman_user }}'
     group: '{{ sdkman_group }}'
     recurse: true
-  become: yes
+  become: true
