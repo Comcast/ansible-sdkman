@@ -66,7 +66,7 @@ Here's an example!
 License
 -------
 
-[Apache 2.0](License)
+[Apache 2.0](LICENSE)
 
 Author Information
 ------------------
