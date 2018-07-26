@@ -28,25 +28,13 @@ def test_config_file(host):
     assert f.contains('sdkman_auto_answer=true')
 
 
-def test_mvn_installed(host):
-    cmds = ['mvn --version']
-    expected = 'Apache Maven 3.3.9'
-    check_run_for_rc_and_result(cmds, expected, host)
-
-
-def test_other_mvn_installed(host):
-    cmds = ['sdk use maven 3.5.0', 'mvn --version']
-    expected = 'Apache Maven 3.5.0'
-    check_run_for_rc_and_result(cmds, expected, host)
-
-
 def test_gradle_installed(host):
     cmds = ['gradle --version']
-    expected = 'Gradle 3.5'
+    expected = 'Gradle 4.6'
     check_run_for_rc_and_result(cmds, expected, host)
 
 
 def test_other_gradle_installed(host):
-    cmds = ['sdk use gradle 2.14.1', 'gradle --version']
-    expected = 'Gradle 2.14.1'
+    cmds = ['sdk use gradle 3.5.1', 'gradle --version']
+    expected = 'Gradle 3.5.1'
     check_run_for_rc_and_result(cmds, expected, host)

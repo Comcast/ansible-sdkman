@@ -6,10 +6,8 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: artful
-    image: ubuntu:artful
-  - name: zesty
-    image: ubuntu:zesty
+  - name: bionic
+    image: ubuntu:bionic
   - name: xenial
     image: ubuntu:xenial
   - name: trusty

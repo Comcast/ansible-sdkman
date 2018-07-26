@@ -4,7 +4,7 @@ system_packages:
   - ca-certificates
   - curl
   - findutils
-  - libstdc\+\+
+  - libstdc++
   - openssl
   - unzip
   - zip

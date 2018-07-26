@@ -10,8 +10,6 @@ platforms:
     image: debian:stretch
   - name: jessie
     image: debian:jessie
-  - name: wheezy
-    image: debian:wheezy
 provisioner:
   name: ansible
   playbooks:

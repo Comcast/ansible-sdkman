@@ -1,9 +1,9 @@
 ---
 # tasks file for ansible-sdkman
 
-- include: install.yml
+- include_tasks: install.yml
 
-- include: sdkman.yml
+- include_tasks: sdkman.yml
   environment:
     SDKMAN_DIR: '{{ sdkman_dir }}'
   become: yes
