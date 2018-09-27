@@ -1,8 +1,6 @@
 ---
 - name: Test SDKMAN role
   hosts: all
-  environment:
-    SDKMAN_DIR: /usr/local/sdkman
   roles:
     - role: ansible-sdkman
       sdkman_dir: /usr/local/sdkman

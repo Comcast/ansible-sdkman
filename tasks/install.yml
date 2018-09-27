@@ -23,7 +23,8 @@
   become: yes
   with_items: '{{ system_packages }}'
 
-- include: install_glibc_alpine.yml
+- name: Install GLIBC for Alpine Linux
+  include_tasks: install_glibc_alpine.yml
   when: ansible_os_family == 'Alpine'
 
 - name: Check for SDKMAN installation
