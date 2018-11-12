@@ -30,6 +30,7 @@
 - name: Check for SDKMAN installation
   stat:
     path: '{{ sdkman_dir }}/bin/sdkman-init.sh'
+  become: yes
   register: sdkman_init
 
 - name: Download SDKMAN
@@ -39,21 +40,24 @@
     owner: '{{ sdkman_user }}'
     group: '{{ sdkman_group }}'
     validate_certs: '{{ sdkman_validate_ssl }}'
+  become: yes
   when: not sdkman_init.stat.exists
 
 - name: Run SDKMAN script
+  become_user: '{{ sdkman_user }}'
+  become: yes
   environment:
     SDKMAN_DIR: '{{ sdkman_dir }}'
   command: bash {{ sdkman_tmp_dir }}/sdkman_script
   args:
     creates: '{{ sdkman_dir }}/bin/sdkman-init.sh'
   when: not sdkman_init.stat.exists
-  become: yes
 
 - name: Cleanup SDKMAN script
   file:
     path: '{{ sdkman_tmp_dir }}/sdkman_script'
     state: absent
+  become: yes
   when: not sdkman_init.stat.exists
 
 - name: Fix permissions on SDKMAN_DIR
@@ -63,4 +67,5 @@
     owner: '{{ sdkman_user }}'
     group: '{{ sdkman_group }}'
     recurse: true
+  become_user: root
   become: yes
