@@ -1,9 +1,10 @@
 Comcast.sdkman
 ==============
 
-[![Build Status][travis-badge]][travis-link]
-[![Apache 2.0 licensed][license-badge]][license-link]
-[![Galaxy Role][role-badge]][galaxy-link]
+[![Galaxy Role][badge-role]][link-galaxy]
+[![Downloads][badge-downloads]][link-galaxy]
+[![Apache 2.0 licensed][badge-license]][link-license]
+[![Build Status][badge-travis]][link-travis]
 
 An Ansible role that performs the following functions:
 * Install [SDKMAN](http://sdkman.io/)
@@ -73,9 +74,10 @@ Author Information
 
 * [Elliot Weiser](https://github.com/elliotweiser) @ [Comcast](https://github.com/Comcast)
 
-[galaxy-link]: https://galaxy.ansible.com/Comcast/sdkman/
-[license-badge]: https://img.shields.io/badge/license-Apache%202.0-blue.svg
-[license-link]: https://raw.githubusercontent.com/Comcast/ansible-sdkman/master/LICENSE
-[role-badge]: https://img.shields.io/ansible/role/20938.svg
-[travis-badge]: https://api.travis-ci.org/Comcast/ansible-sdkman.svg?branch=master
-[travis-link]: https://travis-ci.org/Comcast/ansible-sdkman
+[badge-downloads]: https://img.shields.io/ansible/role/d/20938.svg?style=flat-square
+[badge-license]: https://img.shields.io/github/license/Comcast/ansible-sdkman.svg?style=flat-square
+[badge-role]: https://img.shields.io/ansible/role/20938.svg?style=flat-square
+[badge-travis]: https://img.shields.io/travis/Comcast/ansible-sdkman/master.svg?style=flat-square
+[link-galaxy]: https://galaxy.ansible.com/Comcast/sdkman/
+[link-license]: https://raw.githubusercontent.com/Comcast/ansible-sdkman/master/LICENSE
+[link-travis]: https://travis-ci.org/Comcast/ansible-sdkman
