@@ -25,7 +25,7 @@
 
 - name: Add sgerrand's public key
   get_url:
-    url: '{{ alpine_glibc_download_url }}/sgerrand.rsa.pub'
+    url: '{{ alpine_glibc_pubkey_url }}'
     dest: /etc/apk/keys/
 
 - name: Install GLIBC for Alpine Linux
@@ -33,6 +33,7 @@
     name: '{{ sdkman_tmp_dir }}/{{ item }}-{{ alpine_glibc_version }}.apk'
     state: present
   with_items: '{{ alpine_glibc_pkgs_to_install }}'
+  become: yes
 
 - name: Cleanup GLIBC apk files
   file:
