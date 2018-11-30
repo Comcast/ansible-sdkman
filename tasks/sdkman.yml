@@ -1,6 +1,6 @@
 ---
 # tasks for managing SDKMAN!
-
+  
 - name: Configure SDKMAN
   template:
     src: templates/sdkman_config.j2
@@ -9,6 +9,7 @@
     group: '{{ sdkman_group }}'
 
 - name: Flush SDK caches (before)
+  become_user: '{{ sdkman_user }}'
   shell: >-
     . {{ sdkman_dir }}/bin/sdkman-init.sh && sdk flush {{ item }}
   args:
@@ -17,6 +18,7 @@
   changed_when: false
 
 - name: Update SDKMAN
+  become_user: '{{ sdkman_user }}'
   shell: . {{ sdkman_dir }}/bin/sdkman-init.sh && sdk selfupdate
   args:
     executable: /bin/bash
@@ -25,6 +27,7 @@
   when: sdkman_update
 
 - name: Install SDK candidates/versions
+  become_user: '{{ sdkman_user }}'
   shell: >-
     . {{ sdkman_dir }}/bin/sdkman-init.sh &&
     sdk install {{ item.candidate }} {{ item.version }}
@@ -37,6 +40,7 @@
     in sdk_install.stdout
 
 - name: Uninstall SDK candidates/versions
+  become_user: '{{ sdkman_user }}'
   shell: >-
     . {{ sdkman_dir }}/bin/sdkman-init.sh &&
     sdk uninstall {{ item.candidate }} {{ item.version }}
@@ -49,6 +53,7 @@
     in sdk_uninstall.stdout
 
 - name: Get SDK defaults
+  become_user: '{{ sdkman_user }}'
   shell: . {{ sdkman_dir }}/bin/sdkman-init.sh && sdk current {{ item }}
   args:
     executable: /bin/bash
@@ -58,6 +63,7 @@
     {{ sdkman_install_packages | map(attribute="candidate") | unique | list }}
 
 - name: Set SDK defaults
+  become_user: '{{ sdkman_user }}'
   shell: >-
     . {{ sdkman_dir }}/bin/sdkman-init.sh &&
     sdk default {{ item.key }} {{ item.value }}
@@ -71,8 +77,19 @@
      first).stdout
 
 - name: Flush SDK caches (after)
+  become_user: '{{ sdkman_user }}'
   shell: . {{ sdkman_dir }}/bin/sdkman-init.sh && sdk flush {{ item }}
   args:
     executable: /bin/bash
   with_items: '{{ sdkman_flush_caches_after }}'
   changed_when: false
+
+- name: Fix permissions on SDKMAN_DIR
+  file:
+    path: '{{ sdkman_dir }}'
+    state: directory
+    owner: '{{ sdkman_user }}'
+    group: '{{ sdkman_group }}'
+    mode: 0777
+    recurse: true
+  become: yes

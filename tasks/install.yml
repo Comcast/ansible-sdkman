@@ -42,6 +42,7 @@
   when: not sdkman_init.stat.exists
 
 - name: Run SDKMAN script
+  become_user: '{{ sdkman_user }}'
   environment:
     SDKMAN_DIR: '{{ sdkman_dir }}'
   command: bash {{ sdkman_tmp_dir }}/sdkman_script
@@ -55,12 +56,3 @@
     path: '{{ sdkman_tmp_dir }}/sdkman_script'
     state: absent
   when: not sdkman_init.stat.exists
-
-- name: Fix permissions on SDKMAN_DIR
-  file:
-    path: '{{ sdkman_dir }}'
-    state: directory
-    owner: '{{ sdkman_user }}'
-    group: '{{ sdkman_group }}'
-    recurse: true
-  become: yes
