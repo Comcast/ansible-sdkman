@@ -1,5 +1,5 @@
-Comcast.sdkman
-==============
+Ansible Role: Comcast.sdkman
+============================
 
 [![Galaxy Role][badge-role]][link-galaxy]
 [![Downloads][badge-downloads]][link-galaxy]
@@ -8,7 +8,7 @@ Comcast.sdkman
 
 An Ansible role that performs the following functions:
 * Install [SDKMAN](http://sdkman.io/)
-* Install/uninstall SDKMAN-managed software [candidates](http://sdkman.io/sdks.html)
+* Install/uninstall SDKMAN-managed software [candidates](http://sdkman.io/sdks)
 * Set SDK version defaults
 * Manage the SDKMAN configuration file: `/path/to/sdkman/etc/config`
 * Flush the SDKMAN caches
@@ -42,7 +42,8 @@ Here's an example!
 - hosts: servers
   roles:
     - role: Comcast.sdkman
-      sdkman_dir: /usr/local/sdkman
+      sdkman_user: vagrant
+      sdkman_group: vagrant
       sdkman_auto_answer: true
       sdkman_update: true
       sdkman_uninstall_packages:
@@ -63,6 +64,15 @@ Here's an example!
         - candidates
         - temp
 ```
+
+Additional Notes
+----------------
+
+If you want to skip any steps that require privilege escalation (i.e. `sudo`
+commands), this role has tagged those tasks with the `sdkman_privilege` tag.
+Pass the `--skip-tags` flag on the command-line with this tag in order to
+bypass any steps that may have already been completed by your system
+administrator (e.g. installing system packages).
 
 License
 -------

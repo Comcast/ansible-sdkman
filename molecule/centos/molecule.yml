@@ -7,9 +7,11 @@ lint:
   name: yamllint
 platforms:
   - name: centos7
-    image: centos:7.4.1708
+    image: centos:7.6.1810
+    user: ${MOLECULE_USER}
   - name: centos6
-    image: centos:6.9
+    image: centos:6.10
+    user: ${MOLECULE_USER}
 provisioner:
   name: ansible
   playbooks:

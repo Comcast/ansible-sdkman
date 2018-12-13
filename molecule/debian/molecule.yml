@@ -8,8 +8,10 @@ lint:
 platforms:
   - name: stretch
     image: debian:stretch
+    user: ${MOLECULE_USER}
   - name: jessie
     image: debian:jessie
+    user: ${MOLECULE_USER}
 provisioner:
   name: ansible
   playbooks:

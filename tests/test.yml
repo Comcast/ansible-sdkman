@@ -1,9 +1,13 @@
 ---
 - name: Test SDKMAN role
   hosts: all
+  pre_tasks:
+    - name: Debug ansible_user_id
+      debug: msg={{ ansible_user_id }}
   roles:
     - role: ansible-sdkman
-      sdkman_dir: /usr/local/sdkman
+      sdkman_user: jenkins
+      sdkman_group: jenkins
       sdkman_auto_answer: true
       sdkman_update: true
       sdkman_uninstall_packages:

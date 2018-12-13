@@ -1,7 +1,7 @@
 ---
 # defaults file for ansible-sdkman
 
-# Installation directory defaults to ~/.sdkman
+# Installation directory defaults to the HOME directory of the `sdkman_user`
 # Set sdkman_dir to override
 # sdkman_dir: /usr/local/sdkman
 
@@ -22,7 +22,7 @@ sdkman_validate_ssl: true
 sdkman_update: false
 
 # Configuration file options
-# Reference: http://sdkman.io/usage.html (Configuration section)
+# Reference: http://sdkman.io/usage (Configuration section)
 sdkman_auto_answer: false
 sdkman_auto_selfupdate: false
 sdkman_insecure_ssl: false
@@ -49,6 +49,6 @@ sdkman_defaults: {}
 #   maven: '3.3.9'
 
 # Flush caches before/after installing SDK packages
-# Reference: http://sdkman.io/usage.html (Flush section)
+# Reference: http://sdkman.io/usage (Flush section)
 sdkman_flush_caches_before: []
 sdkman_flush_caches_after: []
