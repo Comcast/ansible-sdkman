@@ -2,11 +2,16 @@
 sudo: required
 language: python
 env:
-  - MOLECULE_SCENARIO=alpine
-  - MOLECULE_SCENARIO=centos
-  - MOLECULE_SCENARIO=debian
-  - MOLECULE_SCENARIO=fedora
-  - MOLECULE_SCENARIO=ubuntu
+  - MOLECULE_SCENARIO=alpine MOLECULE_USER=jenkins
+  - MOLECULE_SCENARIO=alpine MOLECULE_USER=root
+  - MOLECULE_SCENARIO=centos MOLECULE_USER=jenkins
+  - MOLECULE_SCENARIO=centos MOLECULE_USER=root
+  - MOLECULE_SCENARIO=debian MOLECULE_USER=jenkins
+  - MOLECULE_SCENARIO=debian MOLECULE_USER=root
+  - MOLECULE_SCENARIO=fedora MOLECULE_USER=jenkins
+  - MOLECULE_SCENARIO=fedora MOLECULE_USER=root
+  - MOLECULE_SCENARIO=ubuntu MOLECULE_USER=jenkins
+  - MOLECULE_SCENARIO=ubuntu MOLECULE_USER=root
 services:
   - docker
 before_install:

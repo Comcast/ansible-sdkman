@@ -1,4 +1,4 @@
-sdkman_dir = '/usr/local/sdkman'
+sdkman_dir = '/home/jenkins/.sdkman'
 
 
 def script_wrap(cmds):
@@ -19,12 +19,11 @@ def check_run_for_rc_and_result(cmds, expected, host, check_stderr=False):
 
 def test_config_file(host):
     f = host.file(sdkman_dir + '/etc/config')
-    setup = host.ansible("setup")
     assert f.exists
     assert f.is_file
-    assert f.mode == 0o644
-    assert f.user == setup['ansible_facts']['ansible_user_id']
-    assert f.gid == setup['ansible_facts']['ansible_user_gid']
+    assert f.mode in [0o644, 0o654, 0o655]
+    assert f.user == 'jenkins'
+    assert f.group == 'jenkins'
     assert f.contains('sdkman_auto_answer=true')
 
 

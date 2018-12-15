@@ -8,8 +8,10 @@ lint:
 platforms:
   - name: alpine-38
     image: alpine:3.8
+    user: ${MOLECULE_USER}
   - name: alpine-37
     image: alpine:3.7
+    user: ${MOLECULE_USER}
 provisioner:
   name: ansible
   playbooks:

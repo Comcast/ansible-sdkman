@@ -5,7 +5,7 @@
   command: apk info --installed {{ item }}
   changed_when: false
   ignore_errors: true
-  with_items: '{{ alpine_glibc_pkg_names }}'
+  loop: '{{ alpine_glibc_pkg_names }}'
   register: alpine_glibc_test
 
 - name: Set Alpine GLIBC packages to install
@@ -21,7 +21,7 @@
     url: >-
       {{ alpine_glibc_download_url }}/{{ item }}-{{ alpine_glibc_version }}.apk
     dest: '{{ sdkman_tmp_dir }}/'
-  with_items: '{{ alpine_glibc_pkgs_to_install }}'
+  loop: '{{ alpine_glibc_pkgs_to_install }}'
 
 - name: Add sgerrand's public key
   get_url:
@@ -32,11 +32,10 @@
   apk:
     name: '{{ sdkman_tmp_dir }}/{{ item }}-{{ alpine_glibc_version }}.apk'
     state: present
-  with_items: '{{ alpine_glibc_pkgs_to_install }}'
-  become: yes
+  loop: '{{ alpine_glibc_pkgs_to_install }}'
 
 - name: Cleanup GLIBC apk files
   file:
     path: '{{ sdkman_tmp_dir }}/{{ item }}-{{ alpine_glibc_version }}.apk'
     state: absent
-  with_items: '{{ alpine_glibc_pkgs_to_install }}'
+  loop: '{{ alpine_glibc_pkgs_to_install }}'

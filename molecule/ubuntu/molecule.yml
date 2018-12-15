@@ -8,10 +8,13 @@ lint:
 platforms:
   - name: bionic
     image: ubuntu:bionic
+    user: ${MOLECULE_USER}
   - name: xenial
     image: ubuntu:xenial
+    user: ${MOLECULE_USER}
   - name: trusty
     image: ubuntu:trusty
+    user: ${MOLECULE_USER}
 provisioner:
   name: ansible
   playbooks:

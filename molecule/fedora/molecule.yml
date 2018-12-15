@@ -8,8 +8,10 @@ lint:
 platforms:
   - name: fedora28
     image: fedora:27
+    user: ${MOLECULE_USER}
   - name: fedora27
     image: fedora:27
+    user: ${MOLECULE_USER}
 provisioner:
   name: ansible
   playbooks:

@@ -13,7 +13,7 @@
     . {{ sdkman_dir }}/bin/sdkman-init.sh && sdk flush {{ item }}
   args:
     executable: /bin/bash
-  with_items: '{{ sdkman_flush_caches_before }}'
+  loop: '{{ sdkman_flush_caches_before }}'
   changed_when: false
 
 - name: Update SDKMAN
@@ -30,7 +30,7 @@
     sdk install {{ item.candidate }} {{ item.version }}
   args:
     executable: /bin/bash
-  with_items: '{{ sdkman_install_packages }}'
+  loop: '{{ sdkman_install_packages }}'
   register: sdk_install
   changed_when: >-
     not item.candidate + ' ' + item.version + ' is already installed.'
@@ -42,7 +42,7 @@
     sdk uninstall {{ item.candidate }} {{ item.version }}
   args:
     executable: /bin/bash
-  with_items: '{{ sdkman_uninstall_packages }}'
+  loop: '{{ sdkman_uninstall_packages }}'
   register: sdk_uninstall
   changed_when: >-
     not item.candidate + ' ' + item.version + ' is not installed.'
@@ -54,7 +54,7 @@
     executable: /bin/bash
   register: get_sdk_defaults
   changed_when: false
-  with_items: >-
+  loop: >-
     {{ sdkman_install_packages | map(attribute="candidate") | unique | list }}
 
 - name: Set SDK defaults
@@ -63,7 +63,7 @@
     sdk default {{ item.key }} {{ item.value }}
   args:
     executable: /bin/bash
-  with_dict: '{{ sdkman_defaults }}'
+  loop: '{{ sdkman_defaults | dict2items }}'
   changed_when: >-
     not item.value in
     (get_sdk_defaults.results |
@@ -74,5 +74,5 @@
   shell: . {{ sdkman_dir }}/bin/sdkman-init.sh && sdk flush {{ item }}
   args:
     executable: /bin/bash
-  with_items: '{{ sdkman_flush_caches_after }}'
+  loop: '{{ sdkman_flush_caches_after }}'
   changed_when: false

@@ -9,5 +9,5 @@
       include_tasks: sdkman.yml
   environment:
     SDKMAN_DIR: '{{ sdkman_dir }}'
-  become: yes
+  become: '{{ sdkman_user != ansible_user_id }}'
   become_user: '{{ sdkman_user }}'
