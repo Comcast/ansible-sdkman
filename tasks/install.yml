@@ -19,7 +19,7 @@
 
 - name: Set SDKMAN_DIR environment variable
   set_fact:
-    sdkman_dir: '{{ sdkman_dir | default(sdkman_user_home_dir.stdout + "/.sdkman") }}'
+    sdkman_dir: '{{ sdkman_dir | default(sdkman_user_home_dir) + "/.sdkman" }}'
 
 - name: Include system vars
   include_vars: "{{ lookup('first_found', params) }}"
