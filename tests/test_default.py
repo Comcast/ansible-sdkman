@@ -38,6 +38,7 @@ def test_other_gradle_installed(host):
     expected = 'Gradle 3.5.1'
     check_run_for_rc_and_result(cmds, expected, host)
 
+
 def test_offline(host):
     cmds = ['sdk list gradle']
     expected = 'Offline: only showing installed gradle versions'
