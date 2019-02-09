@@ -52,3 +52,7 @@ sdkman_defaults: {}
 # Reference: http://sdkman.io/usage (Flush section)
 sdkman_flush_caches_before: []
 sdkman_flush_caches_after: []
+
+# Set SDKMAN to offline mode
+# Reference: https://sdkman.io/usage#offline
+sdkman_offline_mode: false
