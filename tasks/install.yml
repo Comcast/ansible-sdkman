@@ -14,7 +14,6 @@
     getent passwd {{ sdkman_user }} | cut -d: -f6
     {%- endif -%}
   register: sdkman_user_home_dir
-  when: sdkman_dir is undefined
   changed_when: false
 
 - name: Set SDKMAN_DIR environment variable
