@@ -1,6 +1,12 @@
 ---
 # tasks for managing SDKMAN!
 
+- name: Disable SDKMAN offline mode
+  shell: . {{ sdkman_dir }}/bin/sdkman-init.sh && sdk offline disable
+  args:
+    executable: /bin/bash
+  changed_when: false
+
 - name: Configure SDKMAN
   template:
     src: templates/sdkman_config.j2
