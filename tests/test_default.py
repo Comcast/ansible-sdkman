@@ -2,10 +2,8 @@ sdkman_dir = '/home/jenkins/.sdkman'
 
 
 def script_wrap(cmds):
-    sdk_init_tmpl = 'export SDKMAN_DIR={0} && source {0}/bin/sdkman-init.sh'
-    sdk_init = sdk_init_tmpl.format(sdkman_dir)
-    result_cmds = [sdk_init] + cmds
-    return "/bin/bash -c '{0}'".format('; '.join(result_cmds))
+    # run as interactive shell to ensure .bashrc is sourced
+    return "/bin/bash -i -c '{0}'".format('; '.join(cmds))
 
 
 def check_run_for_rc_and_result(cmds, expected, host, check_stderr=False):
