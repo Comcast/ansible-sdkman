@@ -1,9 +1,13 @@
-sdkman_dir = '/home/jenkins/.sdkman'
+sdkman_user = 'jenkins'
+sdkman_group = 'jenkins'
 
 
 def script_wrap(cmds):
-    # run as interactive shell to ensure .bashrc is sourced
-    return "/bin/bash -i -c '{0}'".format('; '.join(cmds))
+    # run as interactive shell under user to ensure .bashrc is sourced
+    return "sudo -H -u {0} /bin/bash -i -c '{1}'".format(
+        sdkman_user,
+        '; '.join(cmds)
+    )
 
 
 def check_run_for_rc_and_result(cmds, expected, host, check_stderr=False):
@@ -16,12 +20,15 @@ def check_run_for_rc_and_result(cmds, expected, host, check_stderr=False):
 
 
 def test_config_file(host):
-    f = host.file(sdkman_dir + '/etc/config')
+    result = host.run(script_wrap(['echo $HOME']))
+    config_file_path = "{0}/.sdkman/etc/config".format(result.stdout)
+
+    f = host.file(config_file_path)
     assert f.exists
     assert f.is_file
     assert f.mode in [0o644, 0o654, 0o655]
-    assert f.user == 'jenkins'
-    assert f.group == 'jenkins'
+    assert f.user == sdkman_user
+    assert f.group == sdkman_group
     assert f.contains('sdkman_auto_answer=true')
 
 
