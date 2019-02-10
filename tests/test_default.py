@@ -43,3 +43,7 @@ def test_offline(host):
     cmds = ['sdk list gradle']
     expected = 'Offline: only showing installed gradle versions'
     check_run_for_rc_and_result(cmds, expected, host)
+
+    cmds = ['sdk offline disable', 'sdk list gradle']
+    expected = 'Available Gradle Versions'
+    check_run_for_rc_and_result(cmds, expected, host)
