@@ -20,8 +20,8 @@ def check_run_for_rc_and_result(cmds, expected, host, check_stderr=False):
 
 
 def test_config_file(host):
-    result = host.run(script_wrap(['echo $HOME']))
-    config_file_path = "{0}/.sdkman/etc/config".format(result.stdout)
+    result = host.run(script_wrap(['echo $SDKMAN_DIR']))
+    config_file_path = "{0}/etc/config".format(result.stdout)
 
     f = host.file(config_file_path)
     assert f.exists
