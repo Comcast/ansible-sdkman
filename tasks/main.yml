@@ -7,6 +7,16 @@
 - block:
     - name: Run SDKMAN tasks
       include_tasks: sdkman.yml
+
+    - name: Persist additional SDKMAN environment variables
+      include_tasks: persist_env.yml
+      loop:
+        - .bash_profile
+        - .profile
+        - .bashrc
+        - .zshrc
+      loop_control:
+        loop_var: sdkman_profile
   environment:
     SDKMAN_DIR: '{{ sdkman_dir }}'
     SDKMAN_OFFLINE_MODE: 'false'

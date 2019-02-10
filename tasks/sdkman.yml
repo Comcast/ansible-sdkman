@@ -76,10 +76,3 @@
     executable: /bin/bash
   loop: '{{ sdkman_flush_caches_after }}'
   changed_when: false
-
-- name: Enable SDKMAN offline mode
-  shell: . {{ sdkman_dir }}/bin/sdkman-init.sh && sdk offline enable
-  args:
-    executable: /bin/bash
-  when: sdkman_offline_mode
-  changed_when: false

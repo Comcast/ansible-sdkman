@@ -1,0 +1,19 @@
+---
+# tasks for persisting SDKMAN environment variables in shell configs
+
+- name: "Set {{ sdkman_profile }} path"
+  set_fact:
+    sdkman_profile_path: '{{ sdkman_user_home_dir.stdout }}/{{ sdkman_profile }}'
+
+- name: "Detect settings in {{ sdkman_profile_path }}"
+  command: "grep 'sdkman-init.sh' '{{ sdkman_profile_path }}'"
+  changed_when: false
+  ignore_errors: true
+  register: sdkman_profile_result
+
+- name: "Add SDKMAN_OFFLINE_MODE to {{ sdkman_profile_path }}"
+  lineinfile:
+    path: "{{ sdkman_profile_path }}"
+    regexp: '^export SDKMAN_OFFLINE_MODE='
+    line: "export SDKMAN_OFFLINE_MODE={{ 'true' if sdkman_offline_mode else 'false' }}"
+  when: sdkman_profile_result.rc == 0
