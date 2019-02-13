@@ -2,16 +2,18 @@ sdkman_user = 'jenkins'
 sdkman_group = 'jenkins'
 
 
-def script_wrap(cmds):
-    # run as interactive shell under user to ensure .bashrc is sourced
-    return "sudo -H -u {0} /bin/bash -i -c '{1}'".format(
-        sdkman_user,
-        '; '.join(cmds)
-    )
+def script_wrap(host, cmds):
+    # run as interactive shell to ensure .bashrc is sourced
+    wrapped_cmd = "/bin/bash -i -c '{0}'".format('; '.join(cmds))
+
+    if host.user.name == sdkman_user:
+        return wrapped_cmd
+    else:
+        return "sudo -H -u {0} {1}".format(sdkman_user, wrapped_cmd)
 
 
 def check_run_for_rc_and_result(cmds, expected, host, check_stderr=False):
-    result = host.run(script_wrap(cmds))
+    result = host.run(script_wrap(host, cmds))
     assert result.rc == 0
     if check_stderr:
         assert result.stderr.find(expected) != -1
@@ -20,7 +22,7 @@ def check_run_for_rc_and_result(cmds, expected, host, check_stderr=False):
 
 
 def test_config_file(host):
-    result = host.run(script_wrap(['echo $SDKMAN_DIR']))
+    result = host.run(script_wrap(host, ['echo $SDKMAN_DIR']))
     config_file_path = "{0}/etc/config".format(result.stdout)
 
     f = host.file(config_file_path)
