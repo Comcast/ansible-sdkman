@@ -56,3 +56,7 @@ sdkman_flush_caches_after: []
 # Set SDKMAN to offline mode
 # Reference: https://sdkman.io/usage#offline
 sdkman_offline_mode: false
+
+# Link SDKMAN installed packages
+# Reference: https://linux.die.net/man/8/update-alternatives
+sdkman_update_alternatives: []
