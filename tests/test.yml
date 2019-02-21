@@ -30,3 +30,10 @@
         - temp
       sdkman_validate_ssl: true
       sdkman_offline_mode: true
+      sdkman_update_alternatives:
+        - candidate: java
+          name: java
+          link: /usr/bin/java
+        - candidate: java
+          name: javac
+          link: /usr/bin/javac

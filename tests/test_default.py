@@ -2,9 +2,12 @@ sdkman_user = 'jenkins'
 sdkman_group = 'jenkins'
 
 
-def script_wrap(host, cmds):
-    # run as interactive shell to ensure .bashrc is sourced
-    wrapped_cmd = "/bin/bash -i -c '{0}'".format('; '.join(cmds))
+def script_wrap(host, cmds, as_interactive=True):
+    # if running as interactive shell, .bashrc will be sourced
+    wrapped_cmd = "/bin/bash {0} -c '{1}'".format(
+        '-i' if as_interactive else '',
+        '; '.join(cmds)
+    )
 
     if host.user.name == sdkman_user:
         return wrapped_cmd
@@ -12,8 +15,9 @@ def script_wrap(host, cmds):
         return "sudo -H -u {0} {1}".format(sdkman_user, wrapped_cmd)
 
 
-def check_run_for_rc_and_result(cmds, expected, host, check_stderr=False):
-    result = host.run(script_wrap(host, cmds))
+def check_run_for_rc_and_result(cmds, expected, host, check_stderr=False,
+                                as_interactive=True):
+    result = host.run(script_wrap(host, cmds, as_interactive))
     assert result.rc == 0
     if check_stderr:
         assert result.stderr.find(expected) != -1
@@ -53,4 +57,24 @@ def test_offline(host):
 
     cmds = ['sdk offline disable', 'sdk list gradle']
     expected = 'Available Gradle Versions'
+    check_run_for_rc_and_result(cmds, expected, host)
+
+
+def test_update_alternatives(host):
+    cmds = ['/usr/bin/java -version']
+    expected = 'OpenJDK'
+    check_run_for_rc_and_result(
+        cmds, expected, host, check_stderr=True, as_interactive=False)
+
+    cmds = ['readlink -f /usr/bin/java']
+    expected = '.sdkman/candidates/java/8.0.202-zulu/bin/java'
+    check_run_for_rc_and_result(cmds, expected, host)
+
+    cmds = ['/usr/bin/javac -version']
+    expected = 'javac'
+    check_run_for_rc_and_result(
+        cmds, expected, host, check_stderr=True, as_interactive=False)
+
+    cmds = ['readlink -f /usr/bin/javac']
+    expected = '.sdkman/candidates/java/8.0.202-zulu/bin/javac'
     check_run_for_rc_and_result(cmds, expected, host)
