@@ -17,3 +17,6 @@ alpine_glibc_pkg_names:
   - glibc-bin
   - glibc-dev
   - glibc-i18n
+
+alpine_update_alternatives_deps:
+  - dpkg
