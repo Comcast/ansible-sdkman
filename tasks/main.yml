@@ -30,5 +30,6 @@
     link: "{{ item.link }}"
   loop: "{{ sdkman_update_alternatives }}"
   become: yes
+  when: ansible_os_family != 'Darwin'
   tags:
     - sdkman_privilege
