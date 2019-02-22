@@ -49,6 +49,7 @@ Here's an example!
       sdkman_uninstall_packages:
         - { candidate: groovy, version: 1.8.9 }
       sdkman_install_packages:
+        - { candidate: java, version: 8.0.202-zulu }
         - { candidate: gradle, version: '3.5' }
         - { candidate: gradle, version: 2.14.1 }
         - { candidate: maven, version: 3.5.0 }
@@ -56,6 +57,7 @@ Here's an example!
       sdkman_defaults:
         gradle: '3.5'
         maven: 3.3.9
+        java: 8.0.202-zulu
       sdkman_flush_caches_before:
         - temp
       sdkman_flush_caches_after:
@@ -63,6 +65,14 @@ Here's an example!
         - broadcast
         - candidates
         - temp
+      sdkman_offline_mode: false
+      sdkman_update_alternatives:
+        - candidate: java
+          name: java
+          link: /usr/bin/java
+        - candidate: java
+          name: javac
+          link: /usr/bin/javac
 ```
 
 Additional Notes
