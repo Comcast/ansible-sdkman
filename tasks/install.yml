@@ -40,17 +40,10 @@
   tags:
     - sdkman_privilege
 
+# Alpine Linux requires GLIBC
 - block:
-    # Alpine Linux requires GLIBC
     - name: Install GLIBC for Alpine Linux
       include_tasks: install_glibc_alpine.yml
-
-    - name: Install update-alternatives dependencies for Alpine Linux
-      package:
-        name: '{{ alpine_update_alternatives_deps }}'
-        use: '{{ ansible_pkg_mgr }}'
-        state: present
-      when: sdkman_update_alternatives | length > 0
   become: yes
   when: ansible_os_family == 'Alpine'
   tags:
