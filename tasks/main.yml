@@ -22,3 +22,14 @@
     SDKMAN_OFFLINE_MODE: 'false'
   become: '{{ sdkman_user != ansible_user_id }}'
   become_user: '{{ sdkman_user }}'
+
+- name: Update alternatives
+  alternatives:
+    name: "{{ item.name }}"
+    path: "{{ sdkman_dir }}/candidates/{{ item.candidate }}/current/bin/{{ item.name }}"
+    link: "{{ item.link }}"
+  loop: "{{ sdkman_update_alternatives }}"
+  become: yes
+  when: ansible_os_family != 'Darwin'
+  tags:
+    - sdkman_privilege
