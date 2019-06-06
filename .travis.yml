@@ -18,14 +18,13 @@ services:
   - docker
 before_install:
   - sudo apt-get -qq update
-install:
   - python3 -m pip install -U pip
   - python3 -m pip install -U virtualenv
   - python3 -m venv .venv
-  - source .venv/bin/activate
-  - pip install -r tests/test-requirements.txt
+install:
+  - .venv/bin/python3 -m pip install -r tests/test-requirements.txt
 script:
-  - molecule test --scenario-name ${MOLECULE_SCENARIO}
+  - .venv/bin/python3 -m molecule test -s ${MOLECULE_SCENARIO}
 branches:
   only:
     - master
