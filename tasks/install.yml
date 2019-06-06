@@ -6,21 +6,6 @@
     sdkman_user: '{{ sdkman_user | default(ansible_user_id) }}'
     sdkman_group: '{{ sdkman_group | default(ansible_user_gid) }}'
 
-- name: Determine SDKMAN user HOME directory
-  shell: |
-    set -o pipefail
-    {% if ansible_os_family == 'Darwin' %}
-    dscacheutil -q user -a name {{ sdkman_user }} | grep 'dir:' | sed 's/dir: //'
-    {% else %}
-    getent passwd {{ sdkman_user }} | cut -d: -f6
-    {% endif %}
-  register: sdkman_user_home_dir
-  changed_when: false
-
-- name: Set SDKMAN_DIR environment variable
-  set_fact:
-    sdkman_dir: '{{ sdkman_dir | default(sdkman_user_home_dir.stdout + "/.sdkman") }}'
-
 - name: Include system vars
   include_vars: "{{ lookup('first_found', params) }}"
   vars:
@@ -40,6 +25,24 @@
   become: yes
   tags:
     - sdkman_privilege
+
+- name: Determine SDKMAN user HOME directory
+  shell: |
+    set -o pipefail
+    {% if ansible_os_family == 'Darwin' %}
+    dscacheutil -q user -a name {{ sdkman_user }} | grep 'dir:' | sed 's/dir: //'
+    {% else %}
+    getent passwd {{ sdkman_user }} | cut -d: -f6
+    {% endif %}
+  args:
+    executable: /bin/bash
+  register: sdkman_user_home_dir
+  changed_when: false
+
+- name: Set SDKMAN_DIR environment variable
+  set_fact:
+    sdkman_dir: '{{ sdkman_dir | default(sdkman_user_home_dir.stdout + "/.sdkman") }}'
+
 
 # Alpine Linux requires GLIBC
 - block:

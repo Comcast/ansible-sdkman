@@ -19,9 +19,11 @@ services:
 before_install:
   - sudo apt-get -qq update
 install:
-  - virtualenv --python=$(which python2.7) .venv
+  - python3 -m pip install -U pip
+  - python3 -m pip install -U virtualenv
+  - python3 -m venv .venv
   - source .venv/bin/activate
-  - pip install --no-deps -r tests/test-requirements.txt
+  - pip install -r tests/test-requirements.txt
 script:
   - molecule test --scenario-name ${MOLECULE_SCENARIO}
 branches:
