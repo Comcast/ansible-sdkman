@@ -22,7 +22,7 @@
     executable: /bin/bash
   register: sdk_selfupdate
   changed_when: sdk_selfupdate.stdout != 'No update available at this time.'
-  when: sdkman_update
+  when: sdkman_update | bool
 
 - name: Install SDK candidates/versions
   shell: >-

@@ -7,12 +7,13 @@
     sdkman_group: '{{ sdkman_group | default(ansible_user_gid) }}'
 
 - name: Determine SDKMAN user HOME directory
-  shell: >-
-    {%- if ansible_os_family == 'Darwin' -%}
+  shell: |
+    set -o pipefail
+    {% if ansible_os_family == 'Darwin' %}
     dscacheutil -q user -a name {{ sdkman_user }} | grep 'dir:' | sed 's/dir: //'
-    {%- else -%}
+    {% else %}
     getent passwd {{ sdkman_user }} | cut -d: -f6
-    {%- endif -%}
+    {% endif %}
   register: sdkman_user_home_dir
   changed_when: false
 
