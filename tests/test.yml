@@ -15,13 +15,13 @@
           version: 1.8.9
       sdkman_install_packages:
         - candidate: java
-          version: 8.0.202-zulu
+          version: 8.0.212-zulu
         - candidate: gradle
           version: '4.6'
         - candidate: gradle
-          version: '3.5.1'
+          version: 4.10.3
       sdkman_defaults:
-        gradle: '4.6'
+        gradle: 4.10.3
       sdkman_flush_caches_before:
         - temp
       sdkman_flush_caches_after:

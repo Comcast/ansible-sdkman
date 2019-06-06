@@ -27,7 +27,7 @@ def check_run_for_rc_and_result(cmds, expected, host, check_stderr=False,
 
 def test_config_file(host):
     result = host.run(script_wrap(host, ['echo $SDKMAN_DIR']))
-    config_file_path = "{0}/etc/config".format(result.stdout)
+    config_file_path = "{0}/etc/config".format(result.stdout.rstrip())
 
     f = host.file(config_file_path)
     assert f.exists
@@ -40,13 +40,13 @@ def test_config_file(host):
 
 def test_gradle_installed(host):
     cmds = ['gradle --version']
-    expected = 'Gradle 4.6'
+    expected = 'Gradle 4.10.3'
     check_run_for_rc_and_result(cmds, expected, host)
 
 
 def test_other_gradle_installed(host):
-    cmds = ['sdk use gradle 3.5.1', 'gradle --version']
-    expected = 'Gradle 3.5.1'
+    cmds = ['sdk use gradle 4.6', 'gradle --version']
+    expected = 'Gradle 4.6'
     check_run_for_rc_and_result(cmds, expected, host)
 
 
@@ -67,7 +67,7 @@ def test_update_alternatives(host):
         cmds, expected, host, check_stderr=True, as_interactive=False)
 
     cmds = ['readlink -f /usr/bin/java']
-    expected = '.sdkman/candidates/java/8.0.202-zulu/bin/java'
+    expected = '.sdkman/candidates/java/8.0.212-zulu/bin/java'
     check_run_for_rc_and_result(cmds, expected, host)
 
     cmds = ['/usr/bin/javac -version']
@@ -76,5 +76,5 @@ def test_update_alternatives(host):
         cmds, expected, host, check_stderr=True, as_interactive=False)
 
     cmds = ['readlink -f /usr/bin/javac']
-    expected = '.sdkman/candidates/java/8.0.202-zulu/bin/javac'
+    expected = '.sdkman/candidates/java/8.0.212-zulu/bin/javac'
     check_run_for_rc_and_result(cmds, expected, host)

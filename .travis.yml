@@ -1,6 +1,8 @@
 ---
 sudo: required
 language: python
+python:
+  - 3.6
 env:
   - MOLECULE_SCENARIO=alpine MOLECULE_USER=jenkins
   - MOLECULE_SCENARIO=alpine MOLECULE_USER=root
@@ -16,12 +18,13 @@ services:
   - docker
 before_install:
   - sudo apt-get -qq update
+  - python3 -m pip install -U pip
+  - python3 -m pip install -U virtualenv
+  - python3 -m venv .venv
 install:
-  - virtualenv --python=$(which python2.7) .venv
-  - source .venv/bin/activate
-  - pip install --no-deps -r tests/test-requirements.txt
+  - .venv/bin/python3 -m pip install -r tests/test-requirements.txt
 script:
-  - molecule test --scenario-name ${MOLECULE_SCENARIO}
+  - .venv/bin/python3 -m molecule test -s ${MOLECULE_SCENARIO}
 branches:
   only:
     - master
