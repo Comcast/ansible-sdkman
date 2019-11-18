@@ -35,6 +35,10 @@
   changed_when: >-
     not item.candidate + ' ' + item.version + ' is already installed.'
     in sdk_install.stdout
+  failed_when: >-
+    sdk_install.rc != 0 and
+    not item.candidate + ' ' + item.version + ' is already installed.'
+    in sdk_install.stdout
 
 - name: Uninstall SDK candidates/versions
   shell: >-
