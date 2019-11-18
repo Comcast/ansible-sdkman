@@ -15,7 +15,7 @@
           version: 1.8.9
       sdkman_install_packages:
         - candidate: java
-          version: 8.0.212-zulu
+          version: 8.0.232.hs-adpt
         - candidate: gradle
           version: '4.6'
         - candidate: gradle
