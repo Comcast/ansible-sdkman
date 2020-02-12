@@ -6,6 +6,9 @@ driver:
 lint:
   name: yamllint
 platforms:
+  - name: centos8
+    image: centos:8.1.1911
+    user: ${MOLECULE_USER}
   - name: centos7
     image: centos:7.6.1810
     user: ${MOLECULE_USER}
