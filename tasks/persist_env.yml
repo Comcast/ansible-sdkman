@@ -8,7 +8,7 @@
 - name: "Detect settings in {{ sdkman_profile_path }}"
   command: "grep 'sdkman-init.sh' '{{ sdkman_profile_path }}'"
   changed_when: false
-  ignore_errors: true
+  failed_when: false
   register: sdkman_profile_result
 
 - name: "Add SDKMAN_OFFLINE_MODE to {{ sdkman_profile_path }}"
