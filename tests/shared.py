@@ -1,3 +1,5 @@
+import re
+
 sdkman_user = 'jenkins'
 sdkman_group = 'jenkins'
 
@@ -16,13 +18,15 @@ def script_wrap(host, cmds, as_interactive=True):
 
 
 def check_run_for_rc_and_result(cmds, expected, host, check_stderr=False,
-                                as_interactive=True):
+                                as_interactive=True, regex_match=False):
     result = host.run(script_wrap(host, cmds, as_interactive))
     assert result.rc == 0
-    if check_stderr:
-        assert result.stderr.find(expected) != -1
+    check_stream = result.stderr if check_stderr else result.stdout
+    if regex_match:
+        regex = re.compile(expected)
+        assert regex.match(check_stream)
     else:
-        assert result.stdout.find(expected) != -1
+        assert check_stream.find(expected) != -1
 
 
 def test_config_file(host):
@@ -40,13 +44,13 @@ def test_config_file(host):
 
 def test_gradle_installed(host):
     cmds = ['gradle --version']
-    expected = 'Gradle 4.10.3'
+    expected = 'Gradle 6.8.1'
     check_run_for_rc_and_result(cmds, expected, host)
 
 
 def test_other_gradle_installed(host):
-    cmds = ['sdk use gradle 4.6', 'gradle --version']
-    expected = 'Gradle 4.6'
+    cmds = ['sdk use gradle 6.7.1', 'gradle --version']
+    expected = 'Gradle 6.7.1'
     check_run_for_rc_and_result(cmds, expected, host)
 
 
@@ -57,26 +61,4 @@ def test_offline(host):
 
     cmds = ['sdk offline disable', 'sdk list gradle']
     expected = 'Available Gradle Versions'
-    check_run_for_rc_and_result(cmds, expected, host)
-
-
-def test_update_alternatives(host):
-    cmds = ['/usr/bin/java -version']
-    expected = 'OpenJDK'
-    check_run_for_rc_and_result(
-        cmds, expected, host, check_stderr=True, as_interactive=False)
-
-    java_parent_dir = '.sdkman/candidates/java/8.0.232.hs-adpt/bin'
-
-    cmds = ['readlink -f /usr/bin/java']
-    expected = java_parent_dir + '/java'
-    check_run_for_rc_and_result(cmds, expected, host)
-
-    cmds = ['/usr/bin/javac -version']
-    expected = 'javac'
-    check_run_for_rc_and_result(
-        cmds, expected, host, check_stderr=True, as_interactive=False)
-
-    cmds = ['readlink -f /usr/bin/javac']
-    expected = java_parent_dir + '/javac'
     check_run_for_rc_and_result(cmds, expected, host)
