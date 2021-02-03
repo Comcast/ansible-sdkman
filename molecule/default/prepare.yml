@@ -1,5 +1,12 @@
 ---
 - name: Prepare
   hosts: all
-  gather_facts: False
-  tasks: []
+  tasks:
+    - name: Fix /etc/resolv.conf on Alpine
+      shell: 'echo nameserver 8.8.8.8 > /etc/resolv.conf'
+      args:
+        executable: /bin/bash
+      become: yes
+      when:
+        - ansible_os_family == 'Alpine'
+

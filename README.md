@@ -84,6 +84,12 @@ Pass the `--skip-tags` flag on the command-line with this tag in order to
 bypass any steps that may have already been completed by your system
 administrator (e.g. installing system packages).
 
+Testing this role with Alpine Linux has been an uphill battle. The more
+recent JDK builds (>-11) available through SDKMAN are not compatible with
+Alpine. Instead, it is recommended to install a JDK/JRE through the `apk`
+package repository. This all being said, I'm currently unsure how well
+SDKMAN packages run on Alpine. Your mileage may vary. _You have been warned_.
+
 License
 -------
 

@@ -1,0 +1,38 @@
+---
+- name: Test SDKMAN role
+  hosts: all
+  pre_tasks:
+    - name: Debug ansible_user_id
+      debug: msg={{ ansible_user_id }}
+  roles:
+    - role: ansible-sdkman
+      sdkman_user: jenkins
+      sdkman_group: jenkins
+      sdkman_auto_answer: true
+      sdkman_update: true
+      sdkman_uninstall_packages:
+        - candidate: groovy
+          version: 1.8.9
+      sdkman_install_packages:
+        - candidate: java
+        - candidate: gradle
+          version: 6.8.1
+        - candidate: gradle
+          version: 6.7.1
+      sdkman_defaults:
+        gradle: 6.8.1
+      sdkman_flush_caches_before:
+        - temp
+      sdkman_flush_caches_after:
+        - broadcast
+        - archives
+        - temp
+      sdkman_validate_ssl: true
+      sdkman_offline_mode: true
+      sdkman_update_alternatives:
+        - candidate: java
+          name: java
+          link: /usr/bin/java
+        - candidate: java
+          name: javac
+          link: /usr/bin/javac

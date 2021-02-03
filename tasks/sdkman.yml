@@ -27,18 +27,16 @@
 - name: Install SDK candidates/versions
   shell: >-
     . {{ sdkman_dir }}/bin/sdkman-init.sh &&
-    sdk install {{ item.candidate }} {{ item.version }}
+    sdk install {{ item.candidate }} {{ item.version | default('') }}
   args:
     executable: /bin/bash
   loop: '{{ sdkman_install_packages }}'
   register: sdk_install
   changed_when: >-
-    not item.candidate + ' ' + item.version + ' is already installed.'
-    in sdk_install.stdout
+    'is already installed.' not in sdk_install.stdout
   failed_when: >-
     sdk_install.rc != 0 and
-    not item.candidate + ' ' + item.version + ' is already installed.'
-    in sdk_install.stdout
+    'is already installed.' not in sdk_install.stdout
 
 - name: Uninstall SDK candidates/versions
   shell: >-
