@@ -3,33 +3,45 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint:
-  name: yamllint
+lint: |
+  set -e
+  yamllint .
+  flake8 tests
+  ansible-lint -x 208,106 .
 platforms:
-  - name: alpine-38
-    image: alpine:3.8
+  - name: alpine-edge
+    image: alpine:edge
     user: ${MOLECULE_USER}
-  - name: alpine-37
-    image: alpine:3.7
+    dockerfile: ../default/Dockerfile.j2
+    tty: true
+  - name: alpine-3-13
+    image: alpine:3.13
     user: ${MOLECULE_USER}
+    dockerfile: ../default/Dockerfile.j2
+    tty: true
+  - name: alpine-3-12
+    image: alpine:3.12
+    user: ${MOLECULE_USER}
+    dockerfile: ../default/Dockerfile.j2
+    tty: true
+  - name: alpine-3-11
+    image: alpine:3.11
+    user: ${MOLECULE_USER}
+    dockerfile: ../default/Dockerfile.j2
+    tty: true
 provisioner:
   name: ansible
   playbooks:
-    create: ../default/create.yml
     prepare: ../default/prepare.yml
-    converge: ../../tests/test.yml
-    destroy: ../default/destroy.yml
+    converge: ./converge.yml
   config_options:
     defaults:
       callback_whitelist: profile_tasks,timer
-  lint:
-    name: ansible-lint
 scenario:
   name: alpine
 verifier:
   name: testinfra
-  directory: ../../tests/
+  directory: ../../tests/alpine
   options:
     verbose: true
-  lint:
-    name: flake8
+    debug: true

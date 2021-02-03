@@ -49,7 +49,6 @@ rules:
     type: unix
   trailing-spaces: enable
   truthy: disable
-    # level: warning
 
 ignore: |
   .venv/

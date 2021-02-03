@@ -2,7 +2,7 @@
 sudo: required
 language: python
 python:
-  - 3.6
+  - 3.9
 env:
   - MOLECULE_SCENARIO=alpine MOLECULE_USER=jenkins
   - MOLECULE_SCENARIO=alpine MOLECULE_USER=root
@@ -22,9 +22,9 @@ before_install:
   - python3 -m pip install -U virtualenv
   - python3 -m venv .venv
 install:
-  - .venv/bin/python3 -m pip install -r tests/test-requirements.txt
+  - source .venv/bin/activate; pip install -r tests/test-requirements.txt; deactivate
 script:
-  - .venv/bin/python3 -m molecule test -s ${MOLECULE_SCENARIO}
+  - source .venv/bin/activate; molecule test -s ${MOLECULE_SCENARIO}; deactivate
 branches:
   only:
     - master

@@ -3,33 +3,34 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint:
-  name: yamllint
+lint: |
+  set -e
+  yamllint .
+  flake8 tests
+  ansible-lint -x 208,106 .
 platforms:
+  - name: centos8
+    image: centos:8
+    user: ${MOLECULE_USER}
+    dockerfile: ../default/Dockerfile.j2
+    tty: true
   - name: centos7
-    image: centos:7.6.1810
+    image: centos:7
     user: ${MOLECULE_USER}
-  - name: centos6
-    image: centos:6.10
-    user: ${MOLECULE_USER}
+    dockerfile: ../default/Dockerfile.j2
+    tty: true
 provisioner:
   name: ansible
   playbooks:
-    create: ../default/create.yml
     prepare: ../default/prepare.yml
-    converge: ../../tests/test.yml
-    destroy: ../default/destroy.yml
+    converge: ../default/converge.yml
   config_options:
     defaults:
       callback_whitelist: profile_tasks,timer
-  lint:
-    name: ansible-lint
 scenario:
   name: centos
 verifier:
   name: testinfra
-  directory: ../../tests/
+  directory: ../../tests/default
   options:
     verbose: true
-  lint:
-    name: flake8

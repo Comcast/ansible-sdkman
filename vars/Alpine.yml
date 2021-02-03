@@ -10,7 +10,7 @@ system_packages:
   - unzip
   - zip
 
-alpine_glibc_version: 2.29-r0
+alpine_glibc_version: 2.32-r0
 alpine_glibc_download_url: https://github.com/sgerrand/alpine-pkg-glibc/releases/download/{{ alpine_glibc_version }}
 alpine_glibc_pubkey_url: https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
 alpine_glibc_pkg_names:
