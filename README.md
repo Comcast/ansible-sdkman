@@ -54,6 +54,8 @@ Here's an example!
         - { candidate: gradle, version: 2.14.1 }
         - { candidate: maven, version: 3.5.0 }
         - { candidate: maven, version: 3.3.9 }
+        # Use this syntax if you want SDKMAN to be aware of packages installed *without* SDKMAN, e.g. Oracle JDKs
+        - { candidate: java, version: 1.8.0-oracle, localpath: /Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk }
       sdkman_defaults:
         gradle: '3.5'
         maven: 3.3.9
