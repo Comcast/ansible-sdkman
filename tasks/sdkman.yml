@@ -27,7 +27,7 @@
 - name: Install SDK candidates/versions
   shell: >-
     . {{ sdkman_dir }}/bin/sdkman-init.sh &&
-    sdk install {{ item.candidate }} {{ item.version | default('') }}
+    sdk install {{ item.candidate }} {{ item.version | default('') }} {{ item.localpath | default('') }}
   args:
     executable: /bin/bash
   loop: '{{ sdkman_install_packages }}'
