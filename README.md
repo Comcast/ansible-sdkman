@@ -41,7 +41,7 @@ Here's an example!
 ```yaml
 - hosts: servers
   roles:
-    - role: Comcast.sdkman
+    - role: comcast.sdkman
       sdkman_user: vagrant
       sdkman_group: vagrant
       sdkman_auto_answer: true
