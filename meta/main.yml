@@ -33,7 +33,10 @@ galaxy_info:
     - name: MacOSX
       versions:
         - any
-
+    - name: Archlinux
+      versions:
+        - 20220522.0.57327
+        - latesst
   galaxy_tags:
     - ci
     - development
