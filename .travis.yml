@@ -14,6 +14,8 @@ env:
   - MOLECULE_SCENARIO=fedora MOLECULE_USER=root
   - MOLECULE_SCENARIO=ubuntu MOLECULE_USER=jenkins
   - MOLECULE_SCENARIO=ubuntu MOLECULE_USER=root
+  - MOLECULE_SCENARIO=archlinux MOLECULE_USER=jenkins
+  - MOLECULE_SCENARIO=archlinux MOLECULE_USER=root
 services:
   - docker
 before_install:

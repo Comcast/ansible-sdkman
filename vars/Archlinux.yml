@@ -1,0 +1,9 @@
+system_packages:
+  - ca-certificates
+  - curl
+  - findutils
+  - openssl
+  - unzip
+  - zip
+  - unzip
+  - which

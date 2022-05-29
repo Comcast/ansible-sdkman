@@ -20,7 +20,8 @@ RUN if [ $(command -v apt-get) ]; then export DEBIAN_FRONTEND=noninteractive && 
     elif [ $(command -v yum) ]; then yum makecache fast && yum install -y /usr/bin/python /usr/bin/python2-config sudo yum-plugin-ovl bash iproute && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all; \
     elif [ $(command -v zypper) ]; then zypper refresh && zypper install -y python3 sudo bash iproute2 && zypper clean -a; \
     elif [ $(command -v apk) ]; then apk update && apk add --no-cache python3 sudo bash ca-certificates shadow openjdk11-jdk; \
-    elif [ $(command -v xbps-install) ]; then xbps-install -Syu && xbps-install -y python3 sudo bash ca-certificates iproute2 && xbps-remove -O; fi
+    elif [ $(command -v xbps-install) ]; then xbps-install -Syu && xbps-install -y python3 sudo bash ca-certificates iproute2 && xbps-remove -O; \
+    elif [ $(command -v pacman) ]; then pacman --noconfirm -Scc && pacman-db-upgrade && pacman --noconfirm --needed -Syu vi base-devel go ansible git bash iproute2 sudo ca-certificates; fi
 
 RUN groupadd jenkins
 RUN useradd -g jenkins -d /home/jenkins -m -s /bin/bash jenkins
