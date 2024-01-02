@@ -57,6 +57,7 @@
   stat:
     path: '{{ sdkman_dir }}/bin/sdkman-init.sh'
   register: sdkman_init
+  become: yes
 
 # Install SDKMAN if not uninstalled
 - block:
